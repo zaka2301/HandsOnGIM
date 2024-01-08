@@ -6,6 +6,7 @@ public class movement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D playerbody;
     [SerializeField] float move_speed;
+    [SerializeField] float shift_modifier;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,10 +16,18 @@ public class movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float speed = move_speed;
 
-        float x = Input.GetAxis("Horizontal") * move_speed;
-        float y = Input.GetAxis("Vertical") * move_speed;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = move_speed * shift_modifier;
+        }
+
+        float x = Input.GetAxisRaw("Horizontal") * speed;
+        float y = Input.GetAxisRaw("Vertical") * speed;
         playerbody.velocity = new Vector2(x, y);
+
+        
 
 
     }

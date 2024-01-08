@@ -389,7 +389,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerbody: {fileID: 1066449914}
-  move_speed: 5
+  move_speed: 12
+  shift_modifier: 0.5
 --- !u!58 &1066449916
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -467,8 +468,8 @@ Transform:
   m_GameObject: {fileID: 1066449913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1504865754}
   m_Father: {fileID: 0}
@@ -554,7 +555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 5234009615176706457, guid: c041bc770ea863148824a815adecd1af, type: 3}
-  ROF: 0.5
+  ROF: 0.3
 --- !u!1001 &1809951021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -652,7 +653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 5613960049356307505, guid: 2bd82d27c956b7248b544b0a716f93e6, type: 3}
   spawninterval: 1
-  Xoffset: 5
+  Xoffset: 4.5
 --- !u!4 &1964900533
 Transform:
   m_ObjectHideFlags: 0
