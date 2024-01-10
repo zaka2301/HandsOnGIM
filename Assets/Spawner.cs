@@ -14,8 +14,8 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-                    SpawnTrashWave(2, 5.0f, 3, (int) Mathf.Sign(Random.Range(-5,5)));
-
+        SpawnTrashWave(Random.Range(1, 3), Random.Range(1.0f, 1.0f), 3, (int) Mathf.Sign(Random.Range(-5,5)));
+        //SpawnTrashWave(2, 1, 3, 1);
     }
 
     // Update is called once per frame
@@ -27,24 +27,16 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            SpawnTrashWave(2, Random.Range(2,5), 3, (int) Mathf.Sign(Random.Range(-5,5)));
+            SpawnTrashWave(Random.Range(1, 4), Random.Range(1.0f, 1.0f), 3, (int) Mathf.Sign(Random.Range(-5,5)));
+
             
             timer -= spawninterval;
         }
         
     }
-    void spawn()
-    {
-        //float maxP = transform.position.x + Xoffset;
-        //float minP = transform.position.x - Xoffset;
-        //Instantiate(Object, new Vector3(Random.Range(minP, maxP), transform.position.y, 0), transform.rotation);
-    }
-
-
 
     void SpawnTrashWave(int wave, float speed, int amount, int mirror)
     {
-        float distance = 0.2f; //distance between each enemy
         float delay = 0.3f;
         switch(wave)
         {
@@ -53,12 +45,11 @@ public class Spawner : MonoBehaviour
                                                amount,
                                                -5,
                                                9,
-                                               distance,
+                                               5,
+                                               0,
                                                wave,
                                                mirror,
-                                               speed,
-                                               1.0f,
-                                               -1.0f
+                                               speed
                                                ));
                 break;
             case 2:
@@ -66,12 +57,11 @@ public class Spawner : MonoBehaviour
                                                amount,
                                                -5,
                                                5,
-                                               distance,
+                                               5,
+                                               0,
                                                wave,
                                                mirror,
-                                               speed,
-                                               1.0f,
-                                               -2.0f
+                                               speed
                                                ));
                 break;
             case 3:
@@ -79,38 +69,47 @@ public class Spawner : MonoBehaviour
                                                amount,
                                                -5,
                                                9,
-                                               distance,
+                                               5,
+                                               -9,
                                                wave,
                                                mirror,
-                                               speed,
-                                               1.0f,
-                                               -2.0f
+                                               speed/1.5f
                                                ));
                 break;
             default:
+                StartCoroutine(SpawnTrashUnits(delay,
+                                               amount,
+                                               -5,
+                                               9,
+                                               5,
+                                               -9,
+                                               wave,
+                                               mirror,
+                                               speed/1.5f
+                                               ));
                 break;
         }
 
         
     }
 
-    IEnumerator SpawnTrashUnits(float delay, int amount, float pos_x, float pos_y, float distance, int wave, int mirror, float speed, float move_x, float move_y)
+    IEnumerator SpawnTrashUnits(float delay, int amount, float x0, float y0, float x1, float y1,  int wave, int mirror, float speed)
     {
         for (int i = 0; i < amount; ++i){
-            SpawnTrashUnit(pos_x, pos_y, distance, wave, mirror, speed, move_x, move_y);
+            SpawnTrashUnit(x0, y0, x1, y1, wave, mirror, speed);
             yield return new WaitForSeconds(delay);
         }
     }
 
-    void SpawnTrashUnit(float pos_x, float pos_y, float distance, int wave, int mirror, float speed, float move_x, float move_y)
+    void SpawnTrashUnit(float x0, float y0, float x1, float y1, int wave, int mirror, float speed)
     {
-        GameObject trash = Instantiate(Trash, new Vector3(pos_x* mirror, pos_y, 0), transform.rotation) as GameObject;
+        GameObject trash = Instantiate(Trash, new Vector3(x0* mirror, y0, 0), transform.rotation) as GameObject;
         trash_movement trash_property = trash.GetComponent<trash_movement>();
 
         trash_property.wave = wave;
         trash_property.move_speed = speed;
-        trash_property.move_x = move_x * mirror;
-        trash_property.move_y = move_y;
+        trash_property.end_pos = new Vector3(x1 * mirror, y1, 0);
+        trash_property.mid_pos = new Vector3(-3 * mirror, 0, 0);
 
     }
 

@@ -114,5 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044211eee67b6f54bbfea7497f33adff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ah: 1
   move_speed: 0
-  wave_type: 0
+  move_x: 0
+  move_y: 0
+  wave: 0
+  lifetime: 0

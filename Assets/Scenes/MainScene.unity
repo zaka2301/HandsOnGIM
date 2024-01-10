@@ -655,7 +655,7 @@ MonoBehaviour:
   Bitch: {fileID: 0}
   Smallboi: {fileID: 0}
   Bigboi: {fileID: 0}
-  spawninterval: 3
+  spawninterval: 1.5
   Xoffset: 4.5
 --- !u!4 &1964900533
 Transform:
