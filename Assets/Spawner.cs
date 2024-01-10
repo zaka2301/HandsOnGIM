@@ -26,7 +26,8 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            spawn_trash(1);
+            spawn_trash(1, 5.0f, 3, (int) Mathf.Sign(Random.Range(-5,5)));
+            
             timer -= spawninterval;
         }
         
@@ -38,10 +39,26 @@ public class Spawner : MonoBehaviour
         //Instantiate(Object, new Vector3(Random.Range(minP, maxP), transform.position.y, 0), transform.rotation);
     }
 
-    void spawn_trash(int wave)
+    void spawn_trash(int wave, float speed, int amount, int mirror)
     {
-        GameObject trash = Instantiate(Trash, new Vector3(-5, 9, 0), transform.rotation) as GameObject;
-        trash.GetComponent<trash_movement>().wave_type = wave;
-        trash.GetComponent<trash_movement>().move_speed = 5.0f;
+        float distance = 0.2f; //distance between each enemy
+        //Debug.Log(mirror);
+        switch(wave)
+        {
+            case 1:
+                for (int i = 0; i < amount; ++i)
+                    {
+                    GameObject trash = Instantiate(Trash, new Vector3(-5* mirror, 9, 0)*(i * distance + 1) , transform.rotation) as GameObject;
+                    trash.GetComponent<trash_movement>().move_speed = speed;
+                    trash.GetComponent<trash_movement>().move_x = 1.0f * mirror;
+                    trash.GetComponent<trash_movement>().move_y = -2.0f;
+                    }
+                break;
+            default:
+                break;
+        }
+
+        
     }
+
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class trash_movement : MonoBehaviour
 {
     public float move_speed;
-    public int wave_type;
+    public float move_x;
+    public float move_y;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,17 +15,6 @@ public class trash_movement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        switch(wave_type)
-        {
-            case 1:
-                transform.Translate(new Vector2(1, -2) * move_speed * Time.deltaTime);
-                break;
-            case 2:
-                transform.Translate(new Vector2(1, -1) * move_speed * Time.deltaTime);
-                break;
-            default:
-                break;
-
-        }
+        transform.Translate(new Vector2(move_x, move_y) * move_speed * Time.deltaTime);
     }
 }

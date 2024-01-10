@@ -651,7 +651,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0578a69b8babd40419db59585ff4aa06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 5613960049356307505, guid: 2bd82d27c956b7248b544b0a716f93e6, type: 3}
+  Trash: {fileID: 5589539711502710880, guid: 0f82317fabb99bc4e822a32c4c7eb724, type: 3}
+  Bitch: {fileID: 0}
+  Smallboi: {fileID: 0}
+  Bigboi: {fileID: 0}
   spawninterval: 1
   Xoffset: 4.5
 --- !u!4 &1964900533
