@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] GameObject Object;
+    [SerializeField] GameObject Trash;
+    [SerializeField] GameObject Bitch;
+    [SerializeField] GameObject Smallboi;
+    [SerializeField] GameObject Bigboi;
     [SerializeField] float spawninterval;
     [SerializeField] float Xoffset;
     private float timer;
     // Start is called before the first frame update
     void Start()
     {
-        spawn();
+        //spawn();
     }
 
     // Update is called once per frame
@@ -19,19 +22,26 @@ public class Spawner : MonoBehaviour
     {
         if (timer < spawninterval)
         {
-            timer = timer + Time.deltaTime;
+            timer += Time.deltaTime;
         }
         else
         {
-            spawn();
-            timer = 0;
+            spawn_trash(1);
+            timer -= spawninterval;
         }
         
     }
     void spawn()
     {
-        float maxP = transform.position.x + Xoffset;
-        float minP = transform.position.x - Xoffset;
-        Instantiate(Object, new Vector3(Random.Range(minP, maxP), transform.position.y, 0), transform.rotation);
+        //float maxP = transform.position.x + Xoffset;
+        //float minP = transform.position.x - Xoffset;
+        //Instantiate(Object, new Vector3(Random.Range(minP, maxP), transform.position.y, 0), transform.rotation);
+    }
+
+    void spawn_trash(int wave)
+    {
+        GameObject trash = Instantiate(Trash, new Vector3(-5, 9, 0), transform.rotation) as GameObject;
+        trash.GetComponent<trash_movement>().wave_type = wave;
+        trash.GetComponent<trash_movement>().move_speed = 5.0f;
     }
 }
