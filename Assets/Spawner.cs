@@ -14,7 +14,8 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //spawn();
+                    SpawnTrashWave(2, 5.0f, 3, (int) Mathf.Sign(Random.Range(-5,5)));
+
     }
 
     // Update is called once per frame
@@ -26,7 +27,7 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            spawn_trash(1, 5.0f, 3, (int) Mathf.Sign(Random.Range(-5,5)));
+            SpawnTrashWave(2, Random.Range(2,5), 3, (int) Mathf.Sign(Random.Range(-5,5)));
             
             timer -= spawninterval;
         }
@@ -39,26 +40,78 @@ public class Spawner : MonoBehaviour
         //Instantiate(Object, new Vector3(Random.Range(minP, maxP), transform.position.y, 0), transform.rotation);
     }
 
-    void spawn_trash(int wave, float speed, int amount, int mirror)
+
+
+    void SpawnTrashWave(int wave, float speed, int amount, int mirror)
     {
         float distance = 0.2f; //distance between each enemy
-        //Debug.Log(mirror);
+        float delay = 0.3f;
         switch(wave)
         {
             case 1:
-                for (int i = 0; i < amount; ++i)
-                    {
-                    GameObject trash = Instantiate(Trash, new Vector3(-5* mirror, 9, 0)*(i * distance + 1) , transform.rotation) as GameObject;
-                    trash.GetComponent<trash_movement>().move_speed = speed;
-                    trash.GetComponent<trash_movement>().move_x = 1.0f * mirror;
-                    trash.GetComponent<trash_movement>().move_y = -2.0f;
-                    }
+                StartCoroutine(SpawnTrashUnits(delay,
+                                               amount,
+                                               -5,
+                                               9,
+                                               distance,
+                                               wave,
+                                               mirror,
+                                               speed,
+                                               1.0f,
+                                               -1.0f
+                                               ));
+                break;
+            case 2:
+                StartCoroutine(SpawnTrashUnits(delay,
+                                               amount,
+                                               -5,
+                                               5,
+                                               distance,
+                                               wave,
+                                               mirror,
+                                               speed,
+                                               1.0f,
+                                               -2.0f
+                                               ));
+                break;
+            case 3:
+                StartCoroutine(SpawnTrashUnits(delay,
+                                               amount,
+                                               -5,
+                                               9,
+                                               distance,
+                                               wave,
+                                               mirror,
+                                               speed,
+                                               1.0f,
+                                               -2.0f
+                                               ));
                 break;
             default:
                 break;
         }
 
         
+    }
+
+    IEnumerator SpawnTrashUnits(float delay, int amount, float pos_x, float pos_y, float distance, int wave, int mirror, float speed, float move_x, float move_y)
+    {
+        for (int i = 0; i < amount; ++i){
+            SpawnTrashUnit(pos_x, pos_y, distance, wave, mirror, speed, move_x, move_y);
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
+    void SpawnTrashUnit(float pos_x, float pos_y, float distance, int wave, int mirror, float speed, float move_x, float move_y)
+    {
+        GameObject trash = Instantiate(Trash, new Vector3(pos_x* mirror, pos_y, 0), transform.rotation) as GameObject;
+        trash_movement trash_property = trash.GetComponent<trash_movement>();
+
+        trash_property.wave = wave;
+        trash_property.move_speed = speed;
+        trash_property.move_x = move_x * mirror;
+        trash_property.move_y = move_y;
+
     }
 
 }
