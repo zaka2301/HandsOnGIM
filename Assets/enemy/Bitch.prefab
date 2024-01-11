@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3817210723320339164}
   m_Layer: 0
   m_Name: Bitch
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,6 +119,8 @@ MonoBehaviour:
   move_speed: 0
   wave: 0
   lifetime: 0
+  health: 1
+  shoot_chance: 0
   shoot_interval: 0.3
   end_pos: {x: 0, y: 0}
   mid_pos: {x: 0, y: 0}

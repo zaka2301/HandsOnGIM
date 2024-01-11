@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class trash_behaviour: MonoBehaviour
+public class trash_behaviour: enemy_behaviour
 {
     public float move_speed;
     public int wave;
-    public float lifetime;
-
-    private Vector2 start_pos;
     public Vector2 end_pos;
     public Vector2 mid_pos;
 
@@ -16,15 +13,13 @@ public class trash_behaviour: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(this.gameObject, 2);
-        this.lifetime = 0.0f;
-        start_pos = transform.position;
         
     }
 
+
     void Update()
     {
-
+        
     }
 
     private static Vector2 QuadBezier(Vector2 p0, Vector2 p1, Vector2 p2, float t)
@@ -35,8 +30,6 @@ public class trash_behaviour: MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        this.lifetime += Time.fixedDeltaTime;
-
 
         switch(wave)
         {

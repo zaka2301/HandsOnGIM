@@ -2,19 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bitch_behaviour : MonoBehaviour
+public class bitch_behaviour : enemy_behaviour
 {
     [SerializeField] GameObject Bullet;
     [SerializeField] GameObject Player;
     public float move_speed;
     public int wave;
-    public float lifetime;
+    public float shoot_chance;
 
     private float timer;
 
     public float shoot_interval;
-
-    private Vector2 start_pos;
     public Vector2 end_pos;
     public Vector2 mid_pos;
 
@@ -23,24 +21,27 @@ public class bitch_behaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(this.gameObject, 2);
-        this.lifetime = 0.0f;
-        start_pos = this.transform.position;
         
     }
 
+
     void Update()
     {
+
+        
         if (timer < shoot_interval)
         {
             timer += Time.deltaTime;
         }
         else
         {
-            
+            if(Random.Range(0.0f, 1.0f) < shoot_chance)
+            {
             GameObject bullet = Instantiate(Bullet, transform.position, transform.rotation) as GameObject;
-            bullet.GetComponent<enemy_bullet>().player_pos = GameObject.FindGameObjectsWithTag("Player")[0].transform.position;
-            bullet.GetComponent<enemy_bullet>().bullet_speed = 5.0f;
+            enemy_bullet bullet_property = bullet.GetComponent<enemy_bullet>();
+            bullet_property.player_pos = GameObject.FindGameObjectsWithTag("Player")[0].transform.position;
+            bullet_property.bullet_speed = 6.25f;
+            }
             timer -= shoot_interval;
         }
 
@@ -54,9 +55,7 @@ public class bitch_behaviour : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        this.lifetime += Time.fixedDeltaTime;
-
-
+        Debug.Log(GetHealth());
         switch(wave)
         {
             case 1:

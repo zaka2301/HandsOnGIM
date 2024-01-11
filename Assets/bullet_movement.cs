@@ -7,6 +7,8 @@ public class bullet_movement : MonoBehaviour
     [SerializeField] float deadzone;
     [SerializeField] float speed;
     // Start is called before the first frame update
+
+
     void Start()
     {
 
@@ -20,6 +22,15 @@ public class bullet_movement : MonoBehaviour
         if (transform.position.y > deadzone)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D target)
+    {
+        if (target.gameObject.CompareTag("Enemy"))
+        {
+           enemy_behaviour enemy = target.gameObject.GetComponent(typeof(enemy_behaviour)) as enemy_behaviour;
+           enemy.Damage(1);
         }
     }
 }
