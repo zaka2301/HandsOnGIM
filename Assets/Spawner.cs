@@ -140,17 +140,6 @@ public class Spawner : MonoBehaviour
                                                ));
                 break;
             case 4:
-                StartCoroutine(SpawnTrashUnits(delay,
-                                               amount,
-                                               -5,
-                                               9,
-                                               5,
-                                               -9,
-                                               wave,
-                                               mirror,
-                                               speed
-                                               ));
-                break;
             default:
                 StartCoroutine(SpawnTrashUnits(delay,
                                                amount,
@@ -163,6 +152,7 @@ public class Spawner : MonoBehaviour
                                                speed
                                                ));
                 break;
+
         }
 
         

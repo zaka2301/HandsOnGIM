@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class bitch_behaviour : MonoBehaviour
 {
+    [SerializeField] GameObject Bullet;
+    [SerializeField] GameObject Player;
     public float move_speed;
     public int wave;
     public float lifetime;
 
+    private float timer;
+
+    public float shoot_interval;
+
     private Vector2 start_pos;
     public Vector2 end_pos;
     public Vector2 mid_pos;
+
 
     
     // Start is called before the first frame update
@@ -24,6 +31,18 @@ public class bitch_behaviour : MonoBehaviour
 
     void Update()
     {
+        if (timer < shoot_interval)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            
+            GameObject bullet = Instantiate(Bullet, transform.position, transform.rotation) as GameObject;
+            bullet.GetComponent<enemy_bullet>().player_pos = GameObject.FindGameObjectsWithTag("Player")[0].transform.position;
+            bullet.GetComponent<enemy_bullet>().bullet_speed = 5.0f;
+            timer -= shoot_interval;
+        }
 
     }
 
