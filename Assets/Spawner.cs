@@ -18,6 +18,12 @@ public class Spawner : MonoBehaviour
                                                   {-5, 5, 5,  0}, //wave 2
                                                   {-5, 9, 5, -9}  //wave 3
     };
+
+    // Lookup table for smallboi wave positions
+    //                                                  x0  x1   x2  x3,y0,y1,y2,y3
+    private float[,] smallboi_waveLUT = new float[,]{{-2.5f,  0, 2.5f,  0, 7, 6, 7, 0}, //wave 1
+                                                     {  -3, -1,   1,  3, 7, 5.5f, 4, 2.5f}, //wave 2
+    };
       
     void Update()
     {
@@ -30,13 +36,13 @@ public class Spawner : MonoBehaviour
 
             //====================
             //RANDOMLY SPAWN SHIT
-            if(Random.Range(0.0f, 1.0f) < 0.5f)
+            if(Random.Range(0.0f, 1.0f) < 1.5f)
             {
-                SpawnBitchWave(Random.Range(1,3), Random.Range(0.25f,1.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1, 0.1f);
+                SpawnSmallboiWave(Random.Range(0.0f, 1.0f) < 0.5f ? 1 : 2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 2, 0.5f);
             }
             else
             {
-                SpawnTrashWave(Random.Range(1,3), Random.Range(0.25f,1.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1);
+                //SpawnTrashWave(Random.Range(1,3), Random.Range(0.25f,1.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1);
             }
             //=====================
 
@@ -101,6 +107,41 @@ public class Spawner : MonoBehaviour
                 break;
         
         }
+    }
+
+void SpawnSmallboiWave(int wave, float speed, int mirror, int health, float shoot_interval)
+    {
+
+                for (int i = 0; i < (wave+2); ++i)
+                {
+                    float x0 = smallboi_waveLUT[wave-1, i];
+                    float y1 = smallboi_waveLUT[wave-1, i+4];
+                    SpawnSmallboiUnit(x0,
+                                      y1+9+i*2,
+                                      x0,
+                                      y1,
+                                      wave,
+                                      mirror,
+                                      health,
+                                      speed
+                    );       
+                }
+
+        
+        
+    }
+
+    void SpawnSmallboiUnit(float x0, float y0, float x1, float y1, int wave, int mirror, int health, float speed)
+    {
+        GameObject smallboi = Instantiate(Smallboi, new Vector3(x0* mirror, y0, 0), transform.rotation) as GameObject;
+        smallboi_behaviour smallboi_property = smallboi.GetComponent<smallboi_behaviour>();
+
+        smallboi_property.SetHealth(health);
+        smallboi_property.wave = wave;
+        smallboi_property.move_speed = speed;
+        smallboi_property.end_pos = new Vector3(x1 * mirror, y1);
+        smallboi_property.shoot_interval = 5.0f;
+
     }
     IEnumerator SpawnBitchUnits(float gap, int amount, float x0, float y0, float x1, float y1,  int wave, int mirror, int health, float speed, float chance)
     {

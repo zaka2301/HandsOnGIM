@@ -5,7 +5,6 @@ using UnityEngine;
 public class bitch_behaviour : enemy_behaviour
 {
     [SerializeField] GameObject Bullet;
-    [SerializeField] GameObject Player;
     public float move_speed;
     public int wave;
     public float shoot_chance;
@@ -31,10 +30,7 @@ public class bitch_behaviour : enemy_behaviour
         {
             if(Random.Range(0.0f, 1.0f) < shoot_chance)
             {
-                GameObject bullet = Instantiate(Bullet, transform.position, transform.rotation) as GameObject;
-                enemy_bullet bullet_property = bullet.GetComponent<enemy_bullet>();
-                bullet_property.player_pos = GameObject.FindGameObjectsWithTag("Player")[0].transform.position;
-                bullet_property.bullet_speed = 6.25f;
+                Shoot(Bullet, GameObject.FindGameObjectsWithTag("Player")[0].transform.position, 6.25f);
             }
             timer -= shoot_interval;
         }

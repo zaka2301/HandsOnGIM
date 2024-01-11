@@ -37,5 +37,14 @@ public class enemy_behaviour : MonoBehaviour
         return health;
     }
 
+    public void Shoot(GameObject BulletPrefab, Vector2 target, float speed)
+    {
+        GameObject bullet = Instantiate(BulletPrefab, transform.position, transform.rotation) as GameObject;
+        enemy_bullet bullet_property = bullet.GetComponent<enemy_bullet>();
+        bullet_property.player_pos = target;
+        bullet_property.bullet_speed = speed;
+    }
+
+
 
 }

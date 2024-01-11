@@ -467,10 +467,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Trash: {fileID: 5589539711502710880, guid: 0f82317fabb99bc4e822a32c4c7eb724, type: 3}
   Bitch: {fileID: 2336145771621596911, guid: a5d6ec6b1e8a57647a7c2ff9ee269ed4, type: 3}
-  Smallboi: {fileID: 0}
+  Smallboi: {fileID: 3646173897919726734, guid: 1dfbc006fd59c714bb315f9f94410847, type: 3}
   Bigboi: {fileID: 0}
   spawninterval: 1.5
-  Xoffset: 4.5
+  gap: 0.2
 --- !u!4 &1964900533
 Transform:
   m_ObjectHideFlags: 0
