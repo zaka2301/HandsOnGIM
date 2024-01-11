@@ -9,19 +9,6 @@ public class trash_behaviour: enemy_behaviour
     public Vector2 end_pos;
     public Vector2 mid_pos;
 
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-
-    void Update()
-    {
-        
-    }
-
     private static Vector2 QuadBezier(Vector2 p0, Vector2 p1, Vector2 p2, float t)
     {
         return (1-t)*(1-t)*p0 + 2*(1-t)*t*p1 + t*t*p2;

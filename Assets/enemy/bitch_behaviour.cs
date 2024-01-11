@@ -19,12 +19,6 @@ public class bitch_behaviour : enemy_behaviour
 
     
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-
     void Update()
     {
 
@@ -37,10 +31,10 @@ public class bitch_behaviour : enemy_behaviour
         {
             if(Random.Range(0.0f, 1.0f) < shoot_chance)
             {
-            GameObject bullet = Instantiate(Bullet, transform.position, transform.rotation) as GameObject;
-            enemy_bullet bullet_property = bullet.GetComponent<enemy_bullet>();
-            bullet_property.player_pos = GameObject.FindGameObjectsWithTag("Player")[0].transform.position;
-            bullet_property.bullet_speed = 6.25f;
+                GameObject bullet = Instantiate(Bullet, transform.position, transform.rotation) as GameObject;
+                enemy_bullet bullet_property = bullet.GetComponent<enemy_bullet>();
+                bullet_property.player_pos = GameObject.FindGameObjectsWithTag("Player")[0].transform.position;
+                bullet_property.bullet_speed = 6.25f;
             }
             timer -= shoot_interval;
         }
@@ -55,7 +49,6 @@ public class bitch_behaviour : enemy_behaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(GetHealth());
         switch(wave)
         {
             case 1:

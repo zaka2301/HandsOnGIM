@@ -6,6 +6,7 @@ public class bullet_movement : MonoBehaviour
 {
     [SerializeField] float deadzone;
     [SerializeField] float speed;
+    [SerializeField] int damage;
     // Start is called before the first frame update
 
 
@@ -30,7 +31,7 @@ public class bullet_movement : MonoBehaviour
         if (target.gameObject.CompareTag("Enemy"))
         {
            enemy_behaviour enemy = target.gameObject.GetComponent(typeof(enemy_behaviour)) as enemy_behaviour;
-           enemy.Damage(1);
+           enemy.Damage(damage);
         }
     }
 }

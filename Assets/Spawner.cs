@@ -9,9 +9,10 @@ public class Spawner : MonoBehaviour
     [SerializeField] GameObject Smallboi;
     [SerializeField] GameObject Bigboi;
     [SerializeField] float spawninterval;
-    [SerializeField] float delay = 0.2f;
+    [SerializeField] float gap = 0.2f; //distance between each units
     private float timer;
 
+    // Lookup table for trash wave positions
     //                                             x0 y0 x1 y1
     private float[,] trash_waveLUT = new float[,]{{-5, 9, 5,  0}, //wave 1
                                                   {-5, 5, 5,  0}, //wave 2
@@ -26,17 +27,37 @@ public class Spawner : MonoBehaviour
         }
         else
         {
+
+            //====================
+            //RANDOMLY SPAWN SHIT
             if(Random.Range(0.0f, 1.0f) < 0.5f)
             {
-                SpawnBitchWave(Random.Range(1,3), Random.Range(0.5f,2.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1, 0.1f);
+                SpawnBitchWave(Random.Range(1,3), Random.Range(0.25f,1.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1, 0.1f);
             }
             else
             {
-                SpawnTrashWave(Random.Range(1,3), Random.Range(0.5f,2.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1);
+                SpawnTrashWave(Random.Range(1,3), Random.Range(0.25f,1.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1);
             }
+            //=====================
+
+
             timer -= spawninterval;
         }
         
+    }
+    void SpawnTrashWave(int wave, float speed, int amount, int mirror, int health)
+    {
+        StartCoroutine(SpawnTrashUnits(gap/speed,
+                                       amount,
+                                       trash_waveLUT[wave-1, 0],
+                                       trash_waveLUT[wave-1, 1],
+                                       trash_waveLUT[wave-1, 2],
+                                       trash_waveLUT[wave-1, 3],
+                                       wave,
+                                       mirror,
+                                       health,
+                                       speed
+                                       ));  
     }
 
     void SpawnBitchWave(int wave, float speed, int amount, int mirror, int health, float shoot_chance)
@@ -45,7 +66,7 @@ public class Spawner : MonoBehaviour
         switch(wave)
         {
             case 1:
-                StartCoroutine(SpawnBitchUnits(delay/speed,
+                StartCoroutine(SpawnBitchUnits(gap/speed,
                                                3,
                                                -5,
                                                9,
@@ -81,11 +102,11 @@ public class Spawner : MonoBehaviour
         
         }
     }
-    IEnumerator SpawnBitchUnits(float delay, int amount, float x0, float y0, float x1, float y1,  int wave, int mirror, int health, float speed, float chance)
+    IEnumerator SpawnBitchUnits(float gap, int amount, float x0, float y0, float x1, float y1,  int wave, int mirror, int health, float speed, float chance)
     {
         for (int i = 0; i < amount; ++i){
             SpawnBitchUnit(x0, y0, x1, y1, wave, mirror, health, speed, chance);
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(gap);
         }
     }
 
@@ -103,27 +124,11 @@ public class Spawner : MonoBehaviour
 
     }
 
-    
-    void SpawnTrashWave(int wave, float speed, int amount, int mirror, int health)
-    {
-        StartCoroutine(SpawnTrashUnits(delay/speed,
-                                       amount,
-                                       trash_waveLUT[wave-1, 0],
-                                       trash_waveLUT[wave-1, 1],
-                                       trash_waveLUT[wave-1, 2],
-                                       trash_waveLUT[wave-1, 3],
-                                       wave,
-                                       mirror,
-                                       health,
-                                       speed
-                                       ));  
-    }
-
-    IEnumerator SpawnTrashUnits(float delay, int amount, float x0, float y0, float x1, float y1,  int wave, int mirror, int health, float speed)
+    IEnumerator SpawnTrashUnits(float gap, int amount, float x0, float y0, float x1, float y1,  int wave, int mirror, int health, float speed)
     {
         for (int i = 0; i < amount; ++i){
             SpawnTrashUnit(x0, y0, x1, y1, wave, mirror, health, speed);
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(gap);
         }
     }
 
