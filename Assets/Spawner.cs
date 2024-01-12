@@ -24,6 +24,11 @@ public class Spawner : MonoBehaviour
     private float[,] smallboi_waveLUT = new float[,]{{-2.5f,  0, 2.5f,  0, 7, 6, 7, 0}, //wave 1
                                                      {  -3, -1,   1,  3, 7, 5.5f, 4, 2.5f}, //wave 2
     };
+
+    void Start()
+    {
+        SpawnBigboiWave(Random.Range(0.0f, 1.0f) < 0.5f ? 1 : 2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 10, 1.0f);
+    }
       
     void Update()
     {
@@ -38,7 +43,8 @@ public class Spawner : MonoBehaviour
             //RANDOMLY SPAWN SHIT
             if(Random.Range(0.0f, 1.0f) < 1.5f)
             {
-                SpawnSmallboiWave(Random.Range(0.0f, 1.0f) < 0.5f ? 1 : 2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 2, 0.5f);
+                //SpawnBitchWave(1, Random.Range(0.25f,1.0f), 3,(int)  Mathf.Sign(Random.Range(-5,5)), 1, 1.0f, 1.0f);
+                //SpawnSmallboiWave(Random.Range(0.0f, 1.0f) < 0.5f ? 1 : 2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 2, 0.5f);
             }
             else
             {
@@ -66,7 +72,7 @@ public class Spawner : MonoBehaviour
                                        ));  
     }
 
-    void SpawnBitchWave(int wave, float speed, int amount, int mirror, int health, float shoot_chance)
+    void SpawnBitchWave(int wave, float speed, int amount, int mirror, int health, float shoot_interval, float shoot_chance)
     {
 
         switch(wave)
@@ -82,6 +88,7 @@ public class Spawner : MonoBehaviour
                                                mirror,
                                                health,
                                                speed,
+                                               shoot_interval,
                                                shoot_chance
                                                ));
                 break;
@@ -101,6 +108,7 @@ public class Spawner : MonoBehaviour
                                    1,
                                    health,
                                    speed,
+                                   shoot_interval,
                                    shoot_chance
                     );
                 }
@@ -123,15 +131,41 @@ void SpawnSmallboiWave(int wave, float speed, int mirror, int health, float shoo
                                       wave,
                                       mirror,
                                       health,
-                                      speed
+                                      speed,
+                                      shoot_interval
                     );       
                 }
-
-        
-        
     }
+void SpawnBigboiWave(int wave, float speed, int mirror, int health, float shoot_interval)
+    {
+        float x0 = -2.5f*(wave-1);
+        float y1 =  3.5f*(wave-1);
+                for (int i = 0; i < wave; ++i)
+                {
+                    SpawnBigboiUnit(x0 + i*5,
+                                    9,
+                                    x0,
+                                    y1,
+                                    wave,
+                                    mirror,
+                                    health,
+                                    speed,
+                                    shoot_interval
+                    );       
+                }
+    }
+void SpawnBigboiUnit(float x0, float y0, float x1, float y1, int wave, int mirror, int health, float speed, float interval)
+    {
+        GameObject bigboi = Instantiate(Bigboi, new Vector3(x0* mirror, y0, 0), transform.rotation) as GameObject;
+        bigboi_behaviour bigboi_property = bigboi.GetComponent<bigboi_behaviour>();
 
-    void SpawnSmallboiUnit(float x0, float y0, float x1, float y1, int wave, int mirror, int health, float speed)
+        bigboi_property.SetHealth(health);
+        bigboi_property.wave = wave;
+        bigboi_property.move_speed = speed;
+        bigboi_property.end_pos = new Vector3(x1 * mirror, y1);
+        bigboi_property.shoot_interval = interval;
+    }
+    void SpawnSmallboiUnit(float x0, float y0, float x1, float y1, int wave, int mirror, int health, float speed, float interval)
     {
         GameObject smallboi = Instantiate(Smallboi, new Vector3(x0* mirror, y0, 0), transform.rotation) as GameObject;
         smallboi_behaviour smallboi_property = smallboi.GetComponent<smallboi_behaviour>();
@@ -140,18 +174,18 @@ void SpawnSmallboiWave(int wave, float speed, int mirror, int health, float shoo
         smallboi_property.wave = wave;
         smallboi_property.move_speed = speed;
         smallboi_property.end_pos = new Vector3(x1 * mirror, y1);
-        smallboi_property.shoot_interval = 5.0f;
+        smallboi_property.shoot_interval = interval;
 
     }
-    IEnumerator SpawnBitchUnits(float gap, int amount, float x0, float y0, float x1, float y1,  int wave, int mirror, int health, float speed, float chance)
+    IEnumerator SpawnBitchUnits(float gap, int amount, float x0, float y0, float x1, float y1,  int wave, int mirror, int health, float speed, float interval, float chance)
     {
         for (int i = 0; i < amount; ++i){
-            SpawnBitchUnit(x0, y0, x1, y1, wave, mirror, health, speed, chance);
+            SpawnBitchUnit(x0, y0, x1, y1, wave, mirror, health, speed, interval, chance);
             yield return new WaitForSeconds(gap);
         }
     }
 
-    void SpawnBitchUnit(float x0, float y0, float x1, float y1, int wave, int mirror, int health, float speed, float chance)
+    void SpawnBitchUnit(float x0, float y0, float x1, float y1, int wave, int mirror, int health, float speed, float interval, float chance)
     {
         GameObject bitch = Instantiate(Bitch, new Vector3(x0* mirror, y0, 0), transform.rotation) as GameObject;
         bitch_behaviour bitch_property = bitch.GetComponent<bitch_behaviour>();
@@ -162,6 +196,7 @@ void SpawnSmallboiWave(int wave, float speed, int mirror, int health, float shoo
         bitch_property.end_pos = new Vector3(x1 * mirror, y1);
         bitch_property.mid_pos = new Vector3(-4 * mirror, 0);
         bitch_property.shoot_chance = chance;
+        bitch_property.shoot_interval = interval;
 
     }
 

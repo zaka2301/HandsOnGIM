@@ -12,7 +12,7 @@ public class enemy_behaviour : MonoBehaviour
 
     void Awake()
     {
-        Destroy(gameObject, 3);
+        //Destroy(gameObject, 3);
         start_pos = transform.position;
     }
     void LateUpdate()
