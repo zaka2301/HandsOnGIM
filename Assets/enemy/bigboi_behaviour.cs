@@ -23,9 +23,9 @@ public class bigboi_behaviour : enemy_behaviour
                                               {-1, 0},
                                               {-0.707f, -0.707f}
     };
-    private float[,] patternB = new float[,]{{-5, 9, 5,  0}, //wave 1
-                                             {-5, 5, 5,  0}, //wave 2
-                                             {-5, 9, 5, -9}  //wave 3
+    private float[,] patternB = new float[,]{{0,-1}, 
+                                             {0.5f, -0.866f}, 
+                                             {-0.5f, -0.866f}  
     };
     // Start is called before the first frame update
     void Update()
@@ -45,7 +45,10 @@ public class bigboi_behaviour : enemy_behaviour
             }
             else
             {
-
+                for(int i = 0; i < 3; ++i)
+                {
+                    StartCoroutine(SpawnBullets(new Vector2(transform.position.x + patternB[i, 0], transform.position.y + patternB[i, 1]), amount));
+                }
             }
             timer -= shoot_interval;
             

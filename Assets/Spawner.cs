@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        SpawnBigboiWave(Random.Range(0.0f, 1.0f) < 0.5f ? 1 : 2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 10, 1.0f);
+        SpawnBigboiWave(2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 10, 1.0f);
     }
       
     void Update()
@@ -139,12 +139,12 @@ void SpawnSmallboiWave(int wave, float speed, int mirror, int health, float shoo
 void SpawnBigboiWave(int wave, float speed, int mirror, int health, float shoot_interval)
     {
         float x0 = -2.5f*(wave-1);
-        float y1 =  3.5f*(wave-1);
+        float y1 =  5*(wave-1);
                 for (int i = 0; i < wave; ++i)
                 {
                     SpawnBigboiUnit(x0 + i*5,
                                     9,
-                                    x0,
+                                    x0 + i*5,
                                     y1,
                                     wave,
                                     mirror,
