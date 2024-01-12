@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class trash_behaviour: enemy_behaviour
 {
-    public float move_speed;
-    public int wave;
-    public Vector2 end_pos;
-    public Vector2 mid_pos;
+    public Vector2 mid_pos = new Vector2(-4, 0);
 
     private static Vector2 QuadBezier(Vector2 p0, Vector2 p1, Vector2 p2, float t)
     {

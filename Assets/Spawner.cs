@@ -25,11 +25,7 @@ public class Spawner : MonoBehaviour
                                                      {  -3, -1,   1,  3, 7, 5.5f, 4, 2.5f}, //wave 2
     };
 
-    void Start()
-    {
-        SpawnBigboiWave(2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 2, 1.0f);
-    }
-      
+
     void Update()
     {
         if (timer < spawninterval)
@@ -38,24 +34,145 @@ public class Spawner : MonoBehaviour
         }
         else
         {
+            int p = Random.Range(0, 10);
 
-            //====================
-            //RANDOMLY SPAWN SHIT
-            if(Random.Range(0.0f, 1.0f) < -1.5f)
+            switch(p)
             {
-                //SpawnBitchWave(1, Random.Range(0.25f,1.0f), 3,(int)  Mathf.Sign(Random.Range(-5,5)), 1, 1.0f, 1.0f);
-                //SpawnSmallboiWave(Random.Range(0.0f, 1.0f) < 0.5f ? 1 : 2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 2, 0.5f);
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    SpawnWave(Smallboi, 3, 1, (int)  Mathf.Sign(Random.Range(-5,5)), 1,  Random.Range(0.25f,1.0f), 1.0f, 1);
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    SpawnWave(Bitch, 3, Random.Range(1,3), (int)  Mathf.Sign(Random.Range(-5,5)), 1,  Random.Range(0.25f,1.0f), 1.0f, 1);
+                    break;
+                case 8:
+                case 9:
+                    SpawnWave(Smallboi, 3, Random.Range(1,3), (int)  Mathf.Sign(Random.Range(-5,5)), 1,  Random.Range(0.25f,1.0f), 1.0f, 1);
+                    break;
+                case 10:
+                default:
+                    SpawnWave(Bigboi, 3, Random.Range(1,3), (int)  Mathf.Sign(Random.Range(-5,5)), 1,  Random.Range(0.25f,1.0f), 1.0f, 1);
+                    break;
+
+
+   
             }
-            else
-            {
-                SpawnTrashWave(Random.Range(1,3), Random.Range(0.25f,1.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1);
-            }
-            //=====================
 
 
             timer -= spawninterval;
         }
         
+    }
+
+    private void SpawnWave(GameObject enemy, int amount, int wave, int mirror, int health, float speed, float interval, float chance)
+    {
+        Debug.Log(enemy.name);
+
+        switch(enemy.name)
+        {
+            case "Trash":
+                StartCoroutine(SpawnUnits(enemy,
+                                          amount,
+                                          trash_waveLUT[wave-1, 0],
+                                          trash_waveLUT[wave-1, 1],
+                                          trash_waveLUT[wave-1, 2],
+                                          trash_waveLUT[wave-1, 3],
+                                          wave,
+                                          mirror,
+                                          health,
+                                          speed
+                                          )); 
+                break;
+            case "Bitch":
+                if(wave==1)
+                {
+                        StartCoroutine(SpawnUnits(enemy,
+                                                  3,
+                                                  -5,
+                                                  9,
+                                                  5,
+                                                  0,
+                                                  wave,
+                                                  mirror,
+                                                  health,
+                                                  speed,
+                                                  interval,
+                                                  chance
+                                                  ));
+
+                }
+                else
+                {
+                        float distance = 1.5f;
+                        float bx0 = 0 - (amount-1) * distance * 0.5f;
+                        float by0 = 9.0f;
+                        for (int i = 0; i < amount; ++i)
+                        {
+
+                            SpawnUnit(enemy,
+                                      bx0 + i * distance,
+                                      by0,
+                                      bx0 + i * distance,
+                                      -9,
+                                      wave,
+                                      1,
+                                      health,
+                                      speed,
+                                      interval,
+                                      chance
+                            );
+                        }
+
+
+                }
+                break;
+            case "Smallboi":
+
+                for (int i = 0; i < (wave+2); ++i)
+                {
+                    float sx0 = smallboi_waveLUT[wave-1, i];
+                    float sy1 = smallboi_waveLUT[wave-1, i+4];
+                    SpawnUnit(enemy,
+                              sx0,
+                              sy1+9+i*2,
+                              sx0,
+                              sy1,
+                              wave,
+                              mirror,
+                              health,
+                              speed,
+                              interval
+                    );       
+                }
+                break;
+            case "Bigboi":
+                float Bx0 = -2.5f*(wave-1);
+                float By1 =  5*(wave-1);
+                for (int i = 0; i < wave; ++i)
+                {
+                    SpawnUnit(enemy,
+                              Bx0 + i*5,
+                              9,
+                              Bx0 + i*5,
+                              By1,
+                              wave,
+                              mirror,
+                              health,
+                              speed,
+                              interval
+                    );       
+                }
+                break;
+            default:
+                break;
+            
+        }      
+
     }
     void SpawnTrashWave(int wave, float speed, int amount, int mirror, int health)
     {
@@ -208,6 +325,14 @@ void SpawnBigboiUnit(float x0, float y0, float x1, float y1, int wave, int mirro
         }
     }
 
+    IEnumerator SpawnUnits(GameObject enemy, int amount, float x0, float y0, float x1, float y1,  int wave, int mirror, int health, float speed, float interval = 0, float chance = 0)
+    {
+        for (int i = 0; i < amount; ++i){
+            SpawnUnit(enemy, x0, y0, x1, y1, wave, mirror, health, speed, interval, chance);
+            yield return new WaitForSeconds(gap/speed);
+        }
+    }
+
     void SpawnTrashUnit(float x0, float y0, float x1, float y1, int wave, int mirror, int health, float speed)
     {
         GameObject trash = Instantiate(Trash, new Vector3(x0* mirror, y0, 0), transform.rotation) as GameObject;
@@ -219,6 +344,21 @@ void SpawnBigboiUnit(float x0, float y0, float x1, float y1, int wave, int mirro
         trash_property.end_pos = new Vector3(x1 * mirror, y1);
         trash_property.mid_pos = new Vector3(-3 * mirror, 0);
 
+    }
+
+    private void SpawnUnit(GameObject enemy, float x0, float y0, float x1, float y1, int wave, int mirror, int health, float speed, float interval = 0, float chance = 0)
+    {
+        Vector3 p0 = new Vector3(x0* mirror, y0, 0);
+        GameObject enemy_to_spawn = Instantiate(enemy, p0, transform.rotation) as GameObject;
+        enemy_behaviour enemy_property = enemy_to_spawn.GetComponent<enemy_behaviour>();
+
+        enemy_property.SetHealth(health);
+        enemy_property.wave = wave;
+        enemy_property.move_speed = speed;
+        enemy_property.shoot_chance = chance;
+        enemy_property.shoot_interval = interval;
+        enemy_property.start_pos = p0;
+        enemy_property.end_pos = new Vector2(x1 * mirror, y1);
     }
 
 }

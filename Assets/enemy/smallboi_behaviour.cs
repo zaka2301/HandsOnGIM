@@ -5,12 +5,8 @@ using UnityEngine;
 public class smallboi_behaviour : enemy_behaviour
 {
     [SerializeField] GameObject Bullet;
-    public float move_speed;
-    public int wave;
-    public float shoot_interval;
 
     private float timer;
-    public Vector2 end_pos;
 
     private int amount = 3;
 

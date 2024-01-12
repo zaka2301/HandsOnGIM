@@ -5,15 +5,10 @@ using UnityEngine;
 public class bitch_behaviour : enemy_behaviour
 {
     [SerializeField] GameObject Bullet;
-    public float move_speed;
-    public int wave;
-    public float shoot_chance;
 
     private float timer;
 
-    public float shoot_interval;
-    public Vector2 end_pos;
-    public Vector2 mid_pos;
+    public Vector2 mid_pos = new Vector2(-4, 0);
 
 
     
