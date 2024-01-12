@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        SpawnBigboiWave(2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 10, 1.0f);
+        SpawnBigboiWave(2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 2, 1.0f);
     }
       
     void Update()
@@ -41,14 +41,14 @@ public class Spawner : MonoBehaviour
 
             //====================
             //RANDOMLY SPAWN SHIT
-            if(Random.Range(0.0f, 1.0f) < 1.5f)
+            if(Random.Range(0.0f, 1.0f) < -1.5f)
             {
                 //SpawnBitchWave(1, Random.Range(0.25f,1.0f), 3,(int)  Mathf.Sign(Random.Range(-5,5)), 1, 1.0f, 1.0f);
                 //SpawnSmallboiWave(Random.Range(0.0f, 1.0f) < 0.5f ? 1 : 2, Random.Range(0.25f,1.0f),(int)  Mathf.Sign(Random.Range(-5,5)), 2, 0.5f);
             }
             else
             {
-                //SpawnTrashWave(Random.Range(1,3), Random.Range(0.25f,1.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1);
+                SpawnTrashWave(Random.Range(1,3), Random.Range(0.25f,1.0f), Random.Range(1,5),(int)  Mathf.Sign(Random.Range(-5,5)), 1);
             }
             //=====================
 

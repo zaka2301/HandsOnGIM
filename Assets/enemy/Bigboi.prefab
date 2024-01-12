@@ -116,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 0
   start_pos: {x: 0, y: 0}
+  in_zone: 0
   Bullet: {fileID: 284904721124008472, guid: 541a2e9b20a58a644afd6d782f0e3a82, type: 3}
   move_speed: 0
   wave: 0

@@ -12,7 +12,15 @@ public class enemy_bullet : MonoBehaviour
     void Start()
     {
         direction = new Vector2(player_pos.x - transform.position.x, player_pos.y - transform.position.y).normalized;
-        Destroy(this.gameObject, 3);
+        
+    }
+
+    void Update()
+    {
+        if(transform.position.x < -6 || transform.position.x > 6 || transform.position.y < -10  || transform.position.y > 10)
+        {
+            ObjectPoolManager.ReturnObjectToPool(this.gameObject);
+        }
     }
 
     // Update is called once per frame

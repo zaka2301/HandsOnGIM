@@ -114,9 +114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044211eee67b6f54bbfea7497f33adff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifetime: 0
+  start_pos: {x: 0, y: 0}
+  in_zone: 0
   move_speed: 0
   wave: 0
-  lifetime: 0
-  health: 1
   end_pos: {x: 0, y: 0}
   mid_pos: {x: 0, y: 0}
