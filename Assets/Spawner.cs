@@ -8,6 +8,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] GameObject Bitch;
     [SerializeField] GameObject Smallboi;
     [SerializeField] GameObject Bigboi;
+
+    [SerializeField] GameObject Spider;
     [SerializeField] float spawninterval;
     [SerializeField] float gap = 0.2f; //distance between each units
     private float timer;
@@ -27,6 +29,7 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
+        SpawnSpider();
         //SpawnWave(Bigboi, 3, Random.Range(1,3), (int)  Mathf.Sign(Random.Range(-5,5)), 10,  Random.Range(0.25f,1.0f), 3.0f, 1);
     }
 
@@ -39,7 +42,7 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            int p = Random.Range(0, 10);
+            int p = 0;//Random.Range(0,10);
 
             switch(p)
             {
@@ -73,6 +76,11 @@ public class Spawner : MonoBehaviour
             timer -= spawninterval;
         }
         
+    }
+
+    private void SpawnSpider()
+    {
+        SpawnUnit(Spider, 0, 10, 0, 10, 0, 0, 50, 1, 5.0f, 1.0f);
     }
 
     private void SpawnWave(GameObject enemy, int amount, int wave, int mirror, int health, float speed, float interval, float chance)

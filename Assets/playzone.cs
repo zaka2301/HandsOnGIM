@@ -7,8 +7,10 @@ public class playzone : MonoBehaviour
     private void OnTriggerExit2D(Collider2D target)
     {
 
-        if(target.gameObject.CompareTag("EnemyBullet") || target.gameObject.CompareTag("Enemy")) {
-           //ObjectPoolManager.ReturnObjectToPool(target.gameObject);
+        if(target.gameObject.CompareTag("EnemyBullet")) {
+           ObjectPoolManager.ReturnObjectToPool(target.gameObject);
+        }
+        if(target.gameObject.CompareTag("Enemy")) {
            Destroy(target.gameObject);
         }
     }

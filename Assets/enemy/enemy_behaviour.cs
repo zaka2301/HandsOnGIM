@@ -46,12 +46,10 @@ public class enemy_behaviour : MonoBehaviour
     {
         if(in_zone)
         {
-            GameObject bullet = Instantiate(BulletPrefab, transform.position, transform.rotation) as GameObject;
-            //fix this shit GameObject bullet = ObjectPoolManager.SpawnObject(BulletPrefab, transform.position, transform.rotation, ObjectPoolManager.PoolType.Gameobject);
-            enemy_bullet bullet_property = bullet.GetComponent<enemy_bullet>();
-            bullet_property.start_pos = start;
-            bullet_property.player_pos = target;
-            bullet_property.bullet_speed = speed;
+            //GameObject bullet = Instantiate(BulletPrefab, start, transform.rotation) as GameObject;
+            //fix this shit 
+            ObjectPoolManager.SpawnObject(BulletPrefab, start, transform.rotation, target, speed, ObjectPoolManager.PoolType.Gameobject);
+
         }
     }
 

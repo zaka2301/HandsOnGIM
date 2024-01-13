@@ -29,7 +29,7 @@ public class ObjectPoolManager : MonoBehaviour
         gameObjectsEmpty.transform.SetParent(objPoolEmptyHolder.transform);
     }
 
-    public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation, PoolType poolType = PoolType.None)
+    public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation,  Vector2 target, float speed, PoolType poolType = PoolType.None)
     {
         PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == objectToSpawn.name);
 
@@ -40,26 +40,36 @@ public class ObjectPoolManager : MonoBehaviour
         }
     
 
-    GameObject spawnableObj = pool.InactiveObjects.FirstOrDefault();
+        GameObject spawnableObj = pool.InactiveObjects.FirstOrDefault();
 
-    if (spawnableObj == null)
-    {
-        GameObject parentObject = SetParentObject(poolType);
-        spawnableObj = Instantiate(objectToSpawn, spawnPosition, spawnRotation);
-
-        if (parentObject != null)
+        if (spawnableObj == null)
         {
-            spawnableObj.transform.SetParent(parentObject.transform);
+            GameObject parentObject = SetParentObject(poolType);
+            spawnableObj = Instantiate(objectToSpawn, spawnPosition, spawnRotation);
+
+            if (parentObject != null)
+            {
+                spawnableObj.transform.SetParent(parentObject.transform);
+            }
+            enemy_bullet bullet_property = spawnableObj.GetComponent<enemy_bullet>();
+            bullet_property.start_pos = spawnPosition;
+            bullet_property.player_pos = target;
+            bullet_property.bullet_speed = speed;
         }
-    }
-    else
-    {
-        spawnableObj.transform.position = spawnPosition;
-        spawnableObj.transform.rotation = spawnRotation;
-        pool.InactiveObjects.Remove(spawnableObj);
-        spawnableObj.SetActive(true);
-    }
-    return spawnableObj;
+        else
+        {
+            spawnableObj.transform.position = spawnPosition;
+            spawnableObj.transform.rotation = spawnRotation;
+            pool.InactiveObjects.Remove(spawnableObj);
+            enemy_bullet bullet_property = spawnableObj.GetComponent<enemy_bullet>();
+            bullet_property.start_pos = spawnPosition;
+            bullet_property.player_pos = target;
+            bullet_property.bullet_speed = speed;
+            spawnableObj.SetActive(true);
+        }
+
+
+        return spawnableObj;
 
     }
 
