@@ -50,7 +50,7 @@ public class Spawner : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
-                    SpawnWave(Trash, 3, 1, (int)  Mathf.Sign(Random.Range(-5,5)), 1,  Random.Range(0.25f,1.0f), 1.0f, 1);
+                    SpawnWave(Trash, 3, 1, (int)  Mathf.Sign(Random.Range(-5,5)), 1,  1.0f, 1.0f, 1);
                     break;
                 case 4:
                 case 5:

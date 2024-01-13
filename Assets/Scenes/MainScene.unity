@@ -491,6 +491,7 @@ GameObject:
   - component: {fileID: 1912298576}
   - component: {fileID: 1912298575}
   - component: {fileID: 1912298574}
+  - component: {fileID: 1912298577}
   m_Layer: 0
   m_Name: Play Zone
   m_TagString: Untagged
@@ -551,6 +552,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1912298577
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912298573}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1964900531
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +606,7 @@ MonoBehaviour:
   Bitch: {fileID: 2336145771621596911, guid: a5d6ec6b1e8a57647a7c2ff9ee269ed4, type: 3}
   Smallboi: {fileID: 3646173897919726734, guid: 1dfbc006fd59c714bb315f9f94410847, type: 3}
   Bigboi: {fileID: 1858923373343504084, guid: 106ec089a26910d4898c36cd9b028f5a, type: 3}
+  Spider: {fileID: 1103348817343062498, guid: 53130bbb69fda114780f0845ba54ce50, type: 3}
   spawninterval: 1
   gap: 0.2
 --- !u!4 &1964900533

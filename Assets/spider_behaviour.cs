@@ -64,7 +64,7 @@ public class spider_behaviour : enemy_behaviour
         }
         else
         {
-            if (GetHealth() > (max_health / 2))
+            if (false)
             {
                 for(int i = 0; i < 3; ++i)
                 {
@@ -92,14 +92,14 @@ public class spider_behaviour : enemy_behaviour
         yield return new WaitForSeconds(2.0f);
         for(int i = 0; i < 8; ++i)
         {
-            StartCoroutine(SpawnBullets(transform.position, new Vector2(transform.position.x + patternA[i, 0] , transform.position.y + patternA[i, 1]) , 8, 0.2f));
+            StartCoroutine(SpawnBullets(transform.position, new Vector2(transform.position.x + patternA[i, 0] , transform.position.y + patternA[i, 1]) , 8, 0.1f));
         }
         yield return new WaitForSeconds(0.2f);
         for(int i = 0; i < 32; ++i)
         {
             if (i%4!=0)
             {
-            StartCoroutine(SpawnBullets(transform.position, new Vector2(transform.position.x + Mathf.Sin(0.1963f * i), transform.position.y + Mathf.Cos(0.1963f * i)), 4, 0.4f));
+            StartCoroutine(SpawnBullets(transform.position, new Vector2(transform.position.x + Mathf.Sin(0.1963f * i), transform.position.y + Mathf.Cos(0.1963f * i)), 4, 0.2f));
             }
         }
         yield return new WaitForSeconds(3.0f);
