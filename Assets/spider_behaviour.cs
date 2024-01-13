@@ -51,7 +51,7 @@ public class spider_behaviour : enemy_behaviour
     {
         if(is_attacking)
         {
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(0,3), Time.deltaTime * 6.0f);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(0,0), Time.deltaTime * 6.0f);
         }
         else
         {
@@ -64,7 +64,20 @@ public class spider_behaviour : enemy_behaviour
         }
         else
         {
+            if (GetHealth() > (max_health / 2))
+            {
+                for(int i = 0; i < 3; ++i)
+                {
+                    StartCoroutine(SpawnBullets(left_fang, new Vector2(left_fang.x + patternB[i, 0], left_fang.y + patternB[i, 1]), amount, 0.2f));
+                }
+                for(int i = 0; i < 3; ++i)
+                {
+                    StartCoroutine(SpawnBullets(right_fang, new Vector2(right_fang.x + patternB[i, 0], right_fang.y + patternB[i, 1]), amount, 0.2f));
+                }
+                timer -= shoot_interval;
+            }
 
+            else
             {
                 StartCoroutine(AttackB());
                 timer -= shoot_interval;
@@ -73,7 +86,6 @@ public class spider_behaviour : enemy_behaviour
             
         } 
     }
-
     IEnumerator AttackB()
     {
         is_attacking = true;
