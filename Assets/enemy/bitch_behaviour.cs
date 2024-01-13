@@ -25,7 +25,7 @@ public class bitch_behaviour : enemy_behaviour
         {
             if(Random.Range(0.0f, 1.0f) < shoot_chance)
             {
-                Shoot(Bullet, GameObject.FindGameObjectsWithTag("Player")[0].transform.position, 6.25f);
+                Shoot(Bullet, transform.position,  GameObject.FindGameObjectsWithTag("Player")[0].transform.position, 6.25f);
             }
             timer -= shoot_interval;
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class enemy_bullet : MonoBehaviour
 {
+    public Vector2 start_pos;
     public Vector2 player_pos;
     private Vector2 direction;
     public float bullet_speed;
@@ -11,17 +12,16 @@ public class enemy_bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        direction = new Vector2(player_pos.x - transform.position.x, player_pos.y - transform.position.y).normalized;
+        direction = new Vector2(player_pos.x - start_pos.x, player_pos.y - start_pos.y).normalized;
+        
+    }
+    void OnEnable()
+    {
+        direction = new Vector2(player_pos.x - start_pos.x, player_pos.y - start_pos.y).normalized;
         
     }
 
-    void Update()
-    {
-        if(transform.position.x < -6 || transform.position.x > 6 || transform.position.y < -10  || transform.position.y > 10)
-        {
-            ObjectPoolManager.ReturnObjectToPool(this.gameObject);
-        }
-    }
+
 
     // Update is called once per frame
     void FixedUpdate()

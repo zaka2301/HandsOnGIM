@@ -67,11 +67,7 @@ public class ObjectPoolManager : MonoBehaviour
     {
         string goName = obj.name.Substring(0, obj.name.Length - 7);
         PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
-        if(pool==null)
-        {
-            Debug.LogWarning("Obj not pooled: " + obj.name);
-        }
-        else
+        if(pool!=null)
         {
             obj.SetActive(false);
             pool.InactiveObjects.Add(obj);

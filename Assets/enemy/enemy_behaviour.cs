@@ -17,21 +17,13 @@ public class enemy_behaviour : MonoBehaviour
     public Vector2 start_pos;
     public Vector2 end_pos;
 
-    public bool in_zone = true;
+    public bool in_zone = false;
     // Start is called before the first frame update
 
     void LateUpdate()
     {
         lifetime += Time.deltaTime;
         if (health <= 0) Destroy(gameObject);
-        if (transform.position.x > -6 && transform.position.x < 6 && transform.position.y > -10  && transform.position.y < 10 )
-        {
-            in_zone = true;
-        }
-        else
-        {
-            //Destroy(gameObject);
-        }
     }
 
     public void Damage(int dmg)
@@ -50,12 +42,14 @@ public class enemy_behaviour : MonoBehaviour
         return health;
     }
 
-    public void Shoot(GameObject BulletPrefab, Vector2 target, float speed)
+    public void Shoot(GameObject BulletPrefab, Vector2 start, Vector2 target, float speed)
     {
-        if (in_zone){
-            //GameObject bullet = Instantiate(BulletPrefab, transform.position, transform.rotation) as GameObject;
-            GameObject bullet = ObjectPoolManager.SpawnObject(BulletPrefab, transform.position, transform.rotation, ObjectPoolManager.PoolType.Gameobject);
+        if(in_zone)
+        {
+            GameObject bullet = Instantiate(BulletPrefab, transform.position, transform.rotation) as GameObject;
+            //fix this shit GameObject bullet = ObjectPoolManager.SpawnObject(BulletPrefab, transform.position, transform.rotation, ObjectPoolManager.PoolType.Gameobject);
             enemy_bullet bullet_property = bullet.GetComponent<enemy_bullet>();
+            bullet_property.start_pos = start;
             bullet_property.player_pos = target;
             bullet_property.bullet_speed = speed;
         }
