@@ -603,11 +603,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Trash: {fileID: 5589539711502710880, guid: 0f82317fabb99bc4e822a32c4c7eb724, type: 3}
+  TrashHealth: 1
+  TrashSpeed: 0.9
   Bitch: {fileID: 2336145771621596911, guid: a5d6ec6b1e8a57647a7c2ff9ee269ed4, type: 3}
+  BitchHealth: 1
+  BitchSpeed: 0.75
+  BitchShootInterval: 1
+  BitchShootChance: 0.5
   Smallboi: {fileID: 3646173897919726734, guid: 1dfbc006fd59c714bb315f9f94410847, type: 3}
+  SmallboiHealth: 3
+  SmallboiSpeed: 0.7
+  SmallboiShootInterval: 1
   Bigboi: {fileID: 1858923373343504084, guid: 106ec089a26910d4898c36cd9b028f5a, type: 3}
+  BigboiHealth: 5
+  BigboiSpeed: 0.6
+  BigboiShootInterval: 1
   Spider: {fileID: 1103348817343062498, guid: 53130bbb69fda114780f0845ba54ce50, type: 3}
-  spawninterval: 1
+  spawninterval: 3
   gap: 0.2
 --- !u!4 &1964900533
 Transform:

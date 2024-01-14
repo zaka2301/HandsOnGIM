@@ -81,7 +81,7 @@ public class Spawner : MonoBehaviour
                 }
             }
         }
-        waves += 1;
+        
     }  
 
 
@@ -102,10 +102,12 @@ public class Spawner : MonoBehaviour
             {
                 if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
                 {
+                waves += 1;
                 SpawnWaves();
                 }
             }
             timer -= spawninterval;
+            Debug.Log(waves);
         }
         
     }

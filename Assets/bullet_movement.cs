@@ -16,14 +16,10 @@ public class bullet_movement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.position = transform.position + (Vector3.up * speed) * Time.deltaTime;
+        transform.position = transform.position + (Vector3.up * speed) * Time.fixedDeltaTime;
 
-        if (transform.position.y > deadzone)
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D target)
