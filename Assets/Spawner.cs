@@ -30,6 +30,8 @@ public class Spawner : MonoBehaviour
     private float timer;
 
     private List<GameObject> SpawnableEnemies = new List<GameObject>();
+    private GameObject EnemyToSpawn;
+    private int EnemiesAlive;
     private int waves = 1;
 
     // Lookup table for trash wave positions
@@ -93,10 +95,22 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            if(SpawnableEnemies.Count > 0)
+            EnemiesAlive = SpawnableEnemies.Count;
+            if(EnemiesAlive > 0)
             {
-                SpawnWave(SpawnableEnemies[0], 3);
-                SpawnableEnemies.RemoveAt(0);
+                for (int i = 0; i < EnemiesAlive; ++i)
+                {
+                    EnemyToSpawn = SpawnableEnemies[i];
+                    if (EnemyToSpawn.name == "Smallboi" && GameObject.Find("Smallboi(Clone)") != null)
+                    {
+                    }
+                    else
+                    {
+                        SpawnWave(EnemyToSpawn, 3);
+                        SpawnableEnemies.RemoveAt(i);
+                        break;
+                    }
+                }
             }
             else
             {
@@ -117,15 +131,28 @@ public class Spawner : MonoBehaviour
         SpawnUnit(Spider, 0, 20, 0, 10, 0, 0, 50, 1, 5.0f, 1.0f);
     }
 
+    private int Random50()
+    {
+        float r = Random.Range(0.0f, 1.0f);
+
+        return r < 0.5f ? 1 : 2;
+    }
+    private int Random33()
+    {
+        float r = Random.Range(0.0f, 1.0f);
+
+        return r < 0.67f ? (r < 0.33f ? 1 : 2) : 3;
+    }
+
     private void SpawnWave(GameObject enemy, int amount)
     {
         int mirror = (int) Mathf.Sign(Random.Range(-1.0f, 1.0f));
-        int wave;
+        int wave = Random50();
 
         switch(enemy.name)
         {
             case "Trash":
-                wave = Random.Range(1,3);
+                wave = Random33();
                 StartCoroutine(SpawnUnits(enemy,
                                           amount,
                                           trash_waveLUT[wave-1, 0],
@@ -139,7 +166,6 @@ public class Spawner : MonoBehaviour
                                           )); 
                 break;
             case "Bitch":
-                wave = Random.Range(1,2);
                 if(wave==1)
                 {
                         StartCoroutine(SpawnUnits(enemy,
@@ -183,7 +209,6 @@ public class Spawner : MonoBehaviour
                 }
                 break;
             case "Smallboi":
-                wave = Random.Range(1,2);
                 for (int i = 0; i < (wave+2); ++i)
                 {
                     float sx0 = smallboi_waveLUT[wave-1, i];
@@ -202,7 +227,6 @@ public class Spawner : MonoBehaviour
                 }
                 break;
             case "Bigboi":
-                wave = Random.Range(1, 2);
                 float Bx0 = -2.5f*(wave-1);
                 float By1 =  5*(wave-1);
                 for (int i = 0; i < wave; ++i)
