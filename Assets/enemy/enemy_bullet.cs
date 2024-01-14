@@ -17,7 +17,6 @@ public class enemy_bullet : MonoBehaviour
     }
     void OnEnable()
     {
-        Debug.Log(player_pos);
         direction = new Vector2(player_pos.x - start_pos.x, player_pos.y - start_pos.y).normalized;
         
     }

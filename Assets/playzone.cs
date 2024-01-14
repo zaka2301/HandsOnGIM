@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class playzone : MonoBehaviour
 {
+
+
     private void OnTriggerExit2D(Collider2D target)
     {
 
         if(target.gameObject.CompareTag("EnemyBullet")) {
-           ObjectPoolManager.ReturnObjectToPool(target.gameObject);
+            ObjectPoolManager.ReturnObjectToPool(target.gameObject);
         }
         if(target.gameObject.CompareTag("Enemy")) {
-           Destroy(target.gameObject);
+            Destroy(target.gameObject);
         }
     }
+
+
 
     private void OnTriggerEnter2D(Collider2D target)
     {

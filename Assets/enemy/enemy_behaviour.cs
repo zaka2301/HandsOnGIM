@@ -20,10 +20,13 @@ public class enemy_behaviour : MonoBehaviour
     public bool in_zone = false;
     // Start is called before the first frame update
 
-    void LateUpdate()
+    public void LateUpdate()
     {
         lifetime += Time.deltaTime;
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0) 
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Damage(int dmg)

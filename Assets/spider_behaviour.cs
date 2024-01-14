@@ -64,7 +64,7 @@ public class spider_behaviour : enemy_behaviour
         }
         else
         {
-            if (false)
+            if (GetHealth() < (max_health / 2))
             {
                 for(int i = 0; i < 3; ++i)
                 {

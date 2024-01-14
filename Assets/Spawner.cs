@@ -5,14 +5,32 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject Trash;
+    [SerializeField] int TrashHealth = 1;
+    [SerializeField] float TrashSpeed = 0.9f;
+
     [SerializeField] GameObject Bitch;
+    [SerializeField] int BitchHealth = 1;
+    [SerializeField] float BitchSpeed = 0.75f;
+    [SerializeField] float BitchShootInterval = 0.5f;
+    [SerializeField] float BitchShootChance= 0.5f;
+
     [SerializeField] GameObject Smallboi;
-    [SerializeField] GameObject Bigboi;
+    [SerializeField] int SmallboiHealth = 3;
+    [SerializeField] float SmallboiSpeed = 0.7f;
+    [SerializeField] float SmallboiShootInterval = 1.5f;
+
+    [SerializeField] GameObject Bigboi;    
+    [SerializeField] int BigboiHealth = 7;
+    [SerializeField] float BigboiSpeed = 0.7f;
+    [SerializeField] float BigboiShootInterval = 2.0f;
 
     [SerializeField] GameObject Spider;
     [SerializeField] float spawninterval;
     [SerializeField] float gap = 0.2f; //distance between each units
     private float timer;
+
+    private List<GameObject> SpawnableEnemies = new List<GameObject>();
+    private int waves = 1;
 
     // Lookup table for trash wave positions
     //                                             x0 y0 x1 y1
@@ -29,9 +47,42 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        SpawnSpider();
-        //SpawnWave(Bigboi, 3, Random.Range(1,3), (int)  Mathf.Sign(Random.Range(-5,5)), 10,  Random.Range(0.25f,1.0f), 3.0f, 1);
+        SpawnWaves();
     }
+
+
+    private void SpawnWaves()
+    {
+        if (waves == 5)
+        {
+            SpawnSpider();
+        }
+        else
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                float chance = Random.Range(0.0f, 1.0f);
+
+                if (chance < 0.143f)
+                {
+                   SpawnableEnemies.Add(Trash);
+                }
+                else if (chance < 0.286f)
+                {
+                   SpawnableEnemies.Add(Bigboi);
+                }
+                else if (chance < 0.571f)
+                {
+                   SpawnableEnemies.Add(Smallboi);
+                }
+                else
+                {
+                   SpawnableEnemies.Add(Bitch);
+                }
+            }
+        }
+        waves += 1;
+    }  
 
 
     void Update()
@@ -42,37 +93,18 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            int p = 0;//Random.Range(0,10);
-
-            switch(p)
+            if(SpawnableEnemies.Count > 0)
             {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                    SpawnWave(Trash, 3, 1, (int)  Mathf.Sign(Random.Range(-5,5)), 1,  1.0f, 1.0f, 1);
-                    break;
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                    SpawnWave(Bitch, 3, Random.Range(1,3), (int)  Mathf.Sign(Random.Range(-5,5)), 1,  Random.Range(0.25f,1.0f), 1.0f, 0.5f);
-                    break;
-                case 8:
-                    SpawnWave(Smallboi, 3, Random.Range(1,3), (int)  Mathf.Sign(Random.Range(-5,5)), 3,  Random.Range(0.25f,1.0f), 2.0f, 1);
-                    break;
-                case 9:
-                    SpawnWave(Bigboi, 3, Random.Range(1,3), (int)  Mathf.Sign(Random.Range(-5,5)), 5,  Random.Range(0.25f,1.0f), 3.0f, 1);
-                    break;
-                case 10:
-                default:
-                    break;
-
-
-   
+                SpawnWave(SpawnableEnemies[0], 3);
+                SpawnableEnemies.RemoveAt(0);
             }
-
-
+            else
+            {
+                if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+                {
+                SpawnWaves();
+                }
+            }
             timer -= spawninterval;
         }
         
@@ -80,15 +112,18 @@ public class Spawner : MonoBehaviour
 
     private void SpawnSpider()
     {
-        SpawnUnit(Spider, 0, 10, 0, 10, 0, 0, 50, 1, 5.0f, 1.0f);
+        SpawnUnit(Spider, 0, 20, 0, 10, 0, 0, 50, 1, 5.0f, 1.0f);
     }
 
-    private void SpawnWave(GameObject enemy, int amount, int wave, int mirror, int health, float speed, float interval, float chance)
+    private void SpawnWave(GameObject enemy, int amount)
     {
+        int mirror = (int) Mathf.Sign(Random.Range(-1.0f, 1.0f));
+        int wave;
 
         switch(enemy.name)
         {
             case "Trash":
+                wave = Random.Range(1,3);
                 StartCoroutine(SpawnUnits(enemy,
                                           amount,
                                           trash_waveLUT[wave-1, 0],
@@ -97,11 +132,12 @@ public class Spawner : MonoBehaviour
                                           trash_waveLUT[wave-1, 3],
                                           wave,
                                           mirror,
-                                          health,
-                                          speed
+                                          TrashHealth,
+                                          TrashSpeed
                                           )); 
                 break;
             case "Bitch":
+                wave = Random.Range(1,2);
                 if(wave==1)
                 {
                         StartCoroutine(SpawnUnits(enemy,
@@ -112,10 +148,10 @@ public class Spawner : MonoBehaviour
                                                   0,
                                                   wave,
                                                   mirror,
-                                                  health,
-                                                  speed,
-                                                  interval,
-                                                  chance
+                                                  BitchHealth,
+                                                  BitchSpeed,
+                                                  BitchShootInterval,
+                                                  BitchShootChance
                                                   ));
 
                 }
@@ -134,10 +170,10 @@ public class Spawner : MonoBehaviour
                                       -9,
                                       wave,
                                       1,
-                                      health,
-                                      speed,
-                                      interval,
-                                      chance
+                                      BitchHealth,
+                                      BitchSpeed,
+                                      BitchShootInterval,
+                                      BitchShootChance
                             );
                         }
 
@@ -145,7 +181,7 @@ public class Spawner : MonoBehaviour
                 }
                 break;
             case "Smallboi":
-
+                wave = Random.Range(1,2);
                 for (int i = 0; i < (wave+2); ++i)
                 {
                     float sx0 = smallboi_waveLUT[wave-1, i];
@@ -157,13 +193,14 @@ public class Spawner : MonoBehaviour
                               sy1,
                               wave,
                               mirror,
-                              health,
-                              speed,
-                              interval
+                              SmallboiHealth,
+                              SmallboiSpeed,
+                              SmallboiShootInterval
                     );       
                 }
                 break;
             case "Bigboi":
+                wave = Random.Range(1, 2);
                 float Bx0 = -2.5f*(wave-1);
                 float By1 =  5*(wave-1);
                 for (int i = 0; i < wave; ++i)
@@ -174,10 +211,10 @@ public class Spawner : MonoBehaviour
                               Bx0 + i*5,
                               By1,
                               wave,
-                              mirror,
-                              health,
-                              speed,
-                              interval
+                              1,
+                              BigboiHealth,
+                              BigboiSpeed,
+                              BigboiShootInterval
                     );       
                 }
                 break;
