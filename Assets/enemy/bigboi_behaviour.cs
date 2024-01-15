@@ -61,7 +61,7 @@ public class bigboi_behaviour : enemy_behaviour
 
         for(int i = 0; i < amount; ++i)
         { 
-            Shoot(Bullet, transform.position, target, 6.25f);
+            Shoot(Bullet, transform.position, target, 6.5f);
             yield return new WaitForSeconds(0.2f);  
         }
         

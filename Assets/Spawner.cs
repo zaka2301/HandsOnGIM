@@ -148,6 +148,7 @@ public class Spawner : MonoBehaviour
 
     private int NextBigboiWave()
     {
+        //prevent bigboi overlapping
         int t = BigboiWave;
         BigboiWave = (BigboiWave+1)%2;
         return t;

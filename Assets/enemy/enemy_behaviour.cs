@@ -25,10 +25,13 @@ public class enemy_behaviour : MonoBehaviour
     public void LateUpdate()
     {
         lifetime += Time.deltaTime * timescaler;
-        if (health <= 0) 
-        {
-            Destroy(gameObject);
-        }
+        if (health <= 0) OnDeath();
+
+    }
+
+    public void OnDeath()
+    {
+        Destroy(gameObject);
     }
 
     public void Damage(int dmg)

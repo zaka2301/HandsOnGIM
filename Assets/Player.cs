@@ -7,11 +7,6 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody2D playerbody;
     [SerializeField] float move_speed;
     [SerializeField] float shift_modifier;
-
-    private LineRenderer lineRenderer;
-    private int pointsCount = 50;
-    private float angleBetweenPoints = 7.2f;
-    private float maxR = 5.0f;
     public static int health;
     float speed;
     public Bomb BombEquipped = new Bomb();
@@ -22,26 +17,36 @@ public class Player : MonoBehaviour
         public int Stock;
     }
 
+
+    private LineRenderer lineRenderer;
+    private int pointsCount = 50;
+    private float angleBetweenPoints = 7.2f;
+    private float maxR = 5.0f;
+
+
+
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = pointsCount + 1;
+        
     }
     // Start is called before the first frame update
     void Start()
     {
-        health = 300;   
+        health = 3;   
         BombEquipped.Type = "Default";
         BombEquipped.Stock = 3;
+    }
+
+    public void OnDeath()
+    {
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
+        if (health <= 0) OnDeath();
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -58,7 +63,8 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine(Blast());
                 Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, maxR);
-                foreach (var hitCollider in hitColliders)
+
+                foreach(var hitCollider in hitColliders)
                 {
                     if (hitCollider.gameObject.CompareTag("Enemy"))
                     {
@@ -75,6 +81,14 @@ public class Player : MonoBehaviour
             else if (BombEquipped.Type == "Stopwatch")
             {
                 StartCoroutine(Stopwatch());
+            }
+            else if(BombEquipped.Type == "Shot Augment")
+            {
+                StartCoroutine(Augment());
+            }
+            else if(BombEquipped.Type == "Master Spark")
+            {
+                StartCoroutine(MasterSpark());
             }
             BombEquipped.Stock -= 1;
         }
@@ -107,18 +121,59 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator Blast()
+    private IEnumerator Augment()
     {
-        float currR = 0.0f;
-        while(currR < maxR)
+        float timer = 0.0f;
+        float duration = 3.0f;
+        bullet_movement.damage_multiplier = 2.0f;
+        while(timer <= duration)
         {
-            currR += Time.deltaTime * 20.0f;
-            Draw(currR);
+            
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        bullet_movement.damage_multiplier = 1.0f;
+    }
+
+    private IEnumerator MasterSpark()
+    {
+        float timer = 0.0f;
+        float duration = 3.0f;
+        Debug.LogWarning("Master Spark not implemented yet");
+
+        while(timer <= duration)
+        {
+            timer += Time.deltaTime;
+            //do shit here idk
             yield return null;
         }
     }
 
-    private void Draw(float currR)
+    private IEnumerator Blast()
+    {
+        float currR = 0.0f;
+        lineRenderer.positionCount = pointsCount + 1;
+        lineRenderer.startColor = Color.yellow;
+        lineRenderer.endColor = Color.yellow;
+        while(currR < maxR)
+        {
+            Collider2D hitCollider = Physics2D.OverlapCircle(transform.position, maxR);
+
+            if (hitCollider.gameObject.CompareTag("EnemyBullet"))
+            {
+                Destroy(hitCollider.gameObject);
+            }
+
+            currR += Time.deltaTime * 20.0f;
+            DrawBlast(currR);
+            yield return null;
+        }
+            lineRenderer.startColor = Color.white;
+            lineRenderer.endColor = Color.white;
+    }
+
+
+    private void DrawBlast(float currR)
     {
         for(int i = 0; i <= pointsCount; i++)
         {

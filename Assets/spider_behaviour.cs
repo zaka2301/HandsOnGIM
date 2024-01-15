@@ -112,7 +112,7 @@ public class spider_behaviour : enemy_behaviour
 
         for(int i = 0; i < amount; ++i)
         { 
-            Shoot(Bullet, start, target, 6.25f);
+            Shoot(Bullet, start, target, 6.5f);
             yield return new WaitForSeconds(delay);  
         }
         
