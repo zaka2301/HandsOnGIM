@@ -26,7 +26,15 @@ public class enemy_bullet : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
         transform.Translate(direction * Time.fixedDeltaTime * bullet_speed);
+    }
+    private void OnTriggerEnter2D(Collider2D target)
+    {
+        if (target.gameObject.CompareTag("Player"))
+        {
+           Player player = target.gameObject.GetComponent<Player>();
+           Player.health-=1;
+           Destroy(gameObject);
+        }
     }
 }

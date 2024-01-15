@@ -51,7 +51,7 @@ public class enemy_behaviour : MonoBehaviour
         {
             //GameObject bullet = Instantiate(BulletPrefab, start, transform.rotation) as GameObject;
             //fix this shit 
-            ObjectPoolManager.SpawnObject(BulletPrefab, start, transform.rotation, target, speed, ObjectPoolManager.PoolType.Gameobject);
+            ObjectPoolManager.SpawnObject(BulletPrefab, start, transform.rotation, target, 6.5f, ObjectPoolManager.PoolType.Gameobject);
 
         }
     }

@@ -33,12 +33,13 @@ public class Spawner : MonoBehaviour
     private GameObject EnemyToSpawn;
     private int EnemiesAlive;
     private int waves = 1;
+    private int BigboiWave;
 
     // Lookup table for trash wave positions
     //                                             x0 y0 x1 y1
     private float[,] trash_waveLUT = new float[,]{{-5, 9, 5,  0}, //wave 1
                                                   {-5, 5, 5,  0}, //wave 2
-                                                  {-5, 9, 5, -9}  //wave 3
+                                                  {-5, 9, 2.5f, -4.5f}  //wave 3
     };
 
     // Lookup table for smallboi wave positions
@@ -59,7 +60,7 @@ public class Spawner : MonoBehaviour
         {
             SpawnSpider();
         }
-        else
+
         {
             for (int i = 0; i < 4; ++i)
             {
@@ -67,19 +68,20 @@ public class Spawner : MonoBehaviour
 
                 if (chance < 0.143f)
                 {
-                   SpawnableEnemies.Add(Trash);
+                    SpawnableEnemies.Add(Trash);
                 }
                 else if (chance < 0.286f)
                 {
-                   SpawnableEnemies.Add(Bigboi);
+                    BigboiWave = Random50();
+                    SpawnableEnemies.Add(Bigboi);
                 }
                 else if (chance < 0.571f)
                 {
-                   SpawnableEnemies.Add(Smallboi);
+                    SpawnableEnemies.Add(Smallboi);
                 }
                 else
                 {
-                   SpawnableEnemies.Add(Bitch);
+                    SpawnableEnemies.Add(Bitch);
                 }
             }
         }
@@ -121,7 +123,7 @@ public class Spawner : MonoBehaviour
                 }
             }
             timer -= spawninterval;
-            Debug.Log(waves);
+            //Debug.Log("Wave : " + waves);
         }
         
     }
@@ -142,6 +144,13 @@ public class Spawner : MonoBehaviour
         float r = Random.Range(0.0f, 1.0f);
 
         return r < 0.67f ? (r < 0.33f ? 1 : 2) : 3;
+    }
+
+    private int NextBigboiWave()
+    {
+        int t = BigboiWave;
+        BigboiWave = (BigboiWave+1)%2;
+        return t;
     }
 
     private void SpawnWave(GameObject enemy, int amount)
@@ -195,7 +204,7 @@ public class Spawner : MonoBehaviour
                                       bx0 + i * distance,
                                       by0,
                                       bx0 + i * distance,
-                                      -9,
+                                      -4,
                                       wave,
                                       1,
                                       BitchHealth,
@@ -227,13 +236,14 @@ public class Spawner : MonoBehaviour
                 }
                 break;
             case "Bigboi":
+                wave = NextBigboiWave();
                 float Bx0 = -2.5f*(wave-1);
                 float By1 =  5*(wave-1);
                 for (int i = 0; i < wave; ++i)
                 {
                     SpawnUnit(enemy,
                               Bx0 + i*5,
-                              9,
+                              10,
                               Bx0 + i*5,
                               By1,
                               wave,

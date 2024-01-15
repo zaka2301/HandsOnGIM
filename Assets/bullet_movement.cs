@@ -28,6 +28,7 @@ public class bullet_movement : MonoBehaviour
         {
            enemy_behaviour enemy = target.gameObject.GetComponent(typeof(enemy_behaviour)) as enemy_behaviour;
            enemy.Damage(damage);
+           Destroy(gameObject);
         }
     }
 }

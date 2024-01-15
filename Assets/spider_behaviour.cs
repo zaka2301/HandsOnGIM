@@ -42,8 +42,7 @@ public class spider_behaviour : enemy_behaviour
     {
         
         max_health = GetHealth();
-        left_fang  = new Vector2(transform.position.x - 1.31f, transform.position.y - 6.89f);
-        right_fang = new Vector2(transform.position.x + 1.31f, transform.position.y - 6.89f);
+
     }
 
     // Update is called once per frame
@@ -66,6 +65,8 @@ public class spider_behaviour : enemy_behaviour
         {
             if (GetHealth() > (max_health / 2))
             {
+                left_fang  = new Vector2(transform.position.x - 1.31f, transform.position.y - 6.89f);
+                right_fang = new Vector2(transform.position.x + 1.31f, transform.position.y - 6.89f);
                 for(int i = 0; i < 3; ++i)
                 {
                     StartCoroutine(SpawnBullets(left_fang, new Vector2(left_fang.x + patternB[i, 0], left_fang.y + patternB[i, 1]), amount, 0.2f));

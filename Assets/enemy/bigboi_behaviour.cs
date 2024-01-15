@@ -31,18 +31,21 @@ public class bigboi_behaviour : enemy_behaviour
         }
         else
         {
-            if(wave == 1)
+            if  ((Vector2) transform.position == end_pos)
             {
-                for(int i = 0; i < 8; ++i)
+                if(wave == 1)
                 {
-                    StartCoroutine(SpawnBullets(new Vector2(patternA[i, 0], patternA[i, 1]), amount));
+                    for(int i = 0; i < 8; ++i)
+                    {
+                        StartCoroutine(SpawnBullets(new Vector2(patternA[i, 0], patternA[i, 1]), amount));
+                    }
                 }
-            }
-            else
-            {
-                for(int i = 0; i < 3; ++i)
+                else
                 {
-                    StartCoroutine(SpawnBullets(new Vector2(transform.position.x + patternB[i, 0], transform.position.y + patternB[i, 1]), amount));
+                    for(int i = 0; i < 3; ++i)
+                    {
+                        StartCoroutine(SpawnBullets(new Vector2(transform.position.x + patternB[i, 0], transform.position.y + patternB[i, 1]), amount));
+                    }
                 }
             }
             timer -= shoot_interval;
