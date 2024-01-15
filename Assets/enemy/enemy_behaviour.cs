@@ -14,6 +14,8 @@ public class enemy_behaviour : MonoBehaviour
     private int health;
     public float lifetime = 0.0f;
 
+    public static float timescaler = 1.0f;
+
     public Vector2 start_pos;
     public Vector2 end_pos;
 
@@ -22,7 +24,7 @@ public class enemy_behaviour : MonoBehaviour
 
     public void LateUpdate()
     {
-        lifetime += Time.deltaTime;
+        lifetime += Time.deltaTime * timescaler;
         if (health <= 0) 
         {
             Destroy(gameObject);

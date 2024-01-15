@@ -9,6 +9,8 @@ public class enemy_bullet : MonoBehaviour
     private Vector2 direction;
     public float bullet_speed;
 
+    public static float timescaler = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,7 @@ public class enemy_bullet : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.Translate(direction * Time.fixedDeltaTime * bullet_speed);
+        transform.Translate(direction * Time.fixedDeltaTime * bullet_speed * timescaler);
     }
     private void OnTriggerEnter2D(Collider2D target)
     {

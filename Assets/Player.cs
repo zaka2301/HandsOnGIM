@@ -52,40 +52,34 @@ public class Player : MonoBehaviour
             speed = move_speed;
         }
 
-        if(BombEquipped.Type == "Default" && BombEquipped.Stock > 0 && Input.GetKeyDown(KeyCode.E))
+        if(BombEquipped.Stock > 0 && Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(Blast());
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, maxR);
-            foreach (var hitCollider in hitColliders)
+            if(BombEquipped.Type == "Default")
             {
-                if (hitCollider.gameObject.CompareTag("Enemy"))
+                StartCoroutine(Blast());
+                Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, maxR);
+                foreach (var hitCollider in hitColliders)
                 {
-                    enemy_behaviour enemy = hitCollider.gameObject.GetComponent(typeof(enemy_behaviour)) as enemy_behaviour;
-                    enemy.Damage(4);
-                }
+                    if (hitCollider.gameObject.CompareTag("Enemy"))
+                    {
+                        enemy_behaviour enemy = hitCollider.gameObject.GetComponent(typeof(enemy_behaviour)) as enemy_behaviour;
+                        enemy.Damage(4);
+                    }
+                    if (hitCollider.gameObject.CompareTag("EnemyBullet"))
+                    {
+                        Destroy(hitCollider.gameObject);
+                    }
 
+                }
+            }
+            else if (BombEquipped.Type == "Stopwatch")
+            {
+                StartCoroutine(Stopwatch());
             }
             BombEquipped.Stock -= 1;
         }
 
 
-    }
-
-    private void OnTriggserStay2D(Collider2D target)
-    {
-        if(true)
-        {
-            if(Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log('h');
-                if (target.gameObject.CompareTag("Enemy"))
-                {
-                    enemy_behaviour enemy = target.gameObject.GetComponent(typeof(enemy_behaviour)) as enemy_behaviour;
-                    enemy.Damage(4);
-                }
-                BombEquipped.Stock -= 1;
-            }
-        }
     }
 
     void FixedUpdate()
@@ -95,6 +89,22 @@ public class Player : MonoBehaviour
         Vector2 move = new Vector2(x, y);
 
         playerbody.velocity = (move * speed);
+    }
+
+
+    private IEnumerator Stopwatch()
+    {
+        float timer = 0.0f;
+        float timescale = 1.0f;
+        while(timer < 2.0f)
+        {
+            float t = timer - 1.0f;
+            timescale = t*t*t*t;
+            enemy_behaviour.timescaler = timescale;
+            enemy_bullet.timescaler = timescale;
+            timer += Time.deltaTime;
+            yield return null;
+        }
     }
 
     private IEnumerator Blast()
