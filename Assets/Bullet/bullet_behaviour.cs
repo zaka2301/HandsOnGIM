@@ -7,8 +7,8 @@ public class bullet_behaviour : MonoBehaviour
     private float deadzone_x = 8f;
     private float deadzone_y = 13f;
     public float speed;
-    [SerializeField] int damage;
-    [SerializeField] int penetration;
+    public int damage;
+    public int penetration;
 
     void LateUpdate()
     {
@@ -16,6 +16,7 @@ public class bullet_behaviour : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
     }
     private void OnTriggerEnter2D(Collider2D target)
     {
@@ -23,6 +24,7 @@ public class bullet_behaviour : MonoBehaviour
         {
             enemy_behaviour enemy = target.gameObject.GetComponent(typeof(enemy_behaviour)) as enemy_behaviour;
             enemy.Damage(damage);
+            Debug.Log(damage);
 
             penetration -= 1;
             if (penetration <= 0) Destroy(gameObject);

@@ -5,15 +5,16 @@ using UnityEngine;
 public class shooter : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
-    [SerializeField] float ROF;
+    public float ROF;
+    [HideInInspector]
+    public float def_rof;
     private float timer;
-    // Start is called before the first frame update
+
     void Start()
     {
+        def_rof = ROF;
         spawn();
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (timer < ROF)

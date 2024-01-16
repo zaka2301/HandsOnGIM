@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Enemy_tracking : bullet_behaviour
+public class Enemy_tracking : MonoBehaviour
 {
-    private Transform target;
+    public Transform target;
     public Transform head;
     public float tracking_range;
     public string enemy_tag = "Enemy";
@@ -41,17 +41,5 @@ public class Enemy_tracking : bullet_behaviour
         }
 
     }
-    void Update()
-    {
-        if (target != null && target.transform.position.y > transform.position.y)
-        {
-            float rotation_step = 1/tracking_strength;
-
-            Vector3 relativePos = target.position - transform.position;
-            float angle = Mathf.Atan2(relativePos.y, relativePos.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis((angle - 90f)/rotation_step, Vector3.forward);
-        }
-
-        transform.position = Vector2.MoveTowards(transform.position, head.transform.position, (speed * Time.deltaTime));
-    }
+    
 }
