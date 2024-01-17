@@ -34,9 +34,13 @@ public class enemy_bullet : MonoBehaviour
     {
         if (target.gameObject.CompareTag("Player"))
         {
-           Player player = target.gameObject.GetComponent<Player>();
-           Player.health-=1;
-           Destroy(gameObject);
+            Player player = target.gameObject.GetComponent<Player>();
+            if(!Player.hit)
+            {
+                Player.hit = true;
+                Player.health-=1;
+                Destroy(gameObject);
+           }
         }
     }
 }
