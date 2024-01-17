@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -36,12 +37,11 @@ public class Character : MonoBehaviour
     private void LevelUp(){
         if(currentLevel < maxLevel){
             itemSelectorScreen.SelectItem();
-            if(maxHealth < 5 ){
-                maxHealth += 1;
-                Player.health = maxHealth;
-                currentHealth = maxHealth;
-                Debug.Log(("Increased max health to: " + Player.health.ToString()));
-            }
+            maxHealth += 5;
+            Player.health = maxHealth;
+            currentHealth = maxHealth;
+            Debug.Log(("Increased max health to: " + Player.health.ToString()));
+            
             currentLevel++;
 
             currentExperience = 0;

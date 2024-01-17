@@ -14,6 +14,13 @@ public class ScoreManager : MonoBehaviour
     int highscore = 0;
     public TMP_Text scoreText;
     public TMP_Text highscoreText;
+    public TMP_Text expTEXT;
+    public TMP_Text levelTEXT;
+    public TMP_Text bombTEXT;
+    public TMP_Text equippedText;
+    public TMP_Text healthText;
+    
+
 
     private void Awake()
     {
@@ -32,6 +39,24 @@ public class ScoreManager : MonoBehaviour
     {
         if(Player.instancePlayer.PlayerIsAlive == true){
             // aliveScore(1);
+        }
+
+        expTEXT.text  = Character.instanceCharacter.currentExperience.ToString() +"/" + Character.instanceCharacter.maxExperience.ToString();
+        levelTEXT.text = Character.instanceCharacter.currentLevel.ToString();
+        bombTEXT.text = Player.instancePlayer.BombEquipped.Stock.ToString();
+        healthText.text = Character.instanceCharacter.currentHealth.ToString();
+
+        if(Player.instancePlayer.BombEquipped.Type == "Default"){
+            equippedText.text = "Equipped: Bomb";
+        }
+        else if(Player.instancePlayer.BombEquipped.Type == "Stopwatch"){
+            equippedText.text = "Equipped: " + Player.instancePlayer.BombEquipped.Type;
+        }
+        else if(Player.instancePlayer.BombEquipped.Type == "Shot Augment"){
+            equippedText.text = "Equipped: " + Player.instancePlayer.BombEquipped.Type;
+        }
+        else{
+            equippedText.text = "Equipped: ";
         }
     }
 

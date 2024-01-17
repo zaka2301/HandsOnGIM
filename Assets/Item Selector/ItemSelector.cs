@@ -22,21 +22,21 @@ public class ItemSelector : MonoBehaviour
     }
     public void AugmentBomb(){
         Player.instancePlayer.BombEquipped.Type = "Shot Augment";
-        Player.instancePlayer.BombEquipped.Stock = 3;
+        Player.instancePlayer.BombEquipped.Stock = 5;
         Time.timeScale = 1f;
         ItemSelectorScreen.SetActive(false);
     }
 
     public void StopwatchBomb(){
         Player.instancePlayer.BombEquipped.Type = "Stopwatch";
-        Player.instancePlayer.BombEquipped.Stock = 3;
+        Player.instancePlayer.BombEquipped.Stock = 5;
         Time.timeScale = 1f;
         ItemSelectorScreen.SetActive(false);
     }
 
     public void DefaultBomb(){
         Player.instancePlayer.BombEquipped.Type = "Default";
-        Player.instancePlayer.BombEquipped.Stock = 3;
+        Player.instancePlayer.BombEquipped.Stock = 5;
         Time.timeScale = 1f;
         ItemSelectorScreen.SetActive(false);
     }

@@ -33,7 +33,7 @@ public class enemy_behaviour : MonoBehaviour
     {
         Destroy(gameObject);
         ScoreManager.instance.killScore(Random.Range(2500,5000));
-        ExperienceManager.instanceExperienceManager.AddExperience(Random.Range(10,50));
+        ExperienceManager.instanceExperienceManager.AddExperience(Random.Range(1,100));
     }
 
     public void Damage(int dmg)
