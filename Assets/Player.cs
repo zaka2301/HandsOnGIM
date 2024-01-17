@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player instancePlayer;
     [SerializeField] Rigidbody2D playerbody;
     [SerializeField] float move_speed;
     [SerializeField] float shift_modifier;
     public static int health;
     float speed;
     public Bomb BombEquipped = new Bomb();
+    public GameHandler gameHandler;
+    public bool PlayerIsAlive = true;
 
     public class Bomb
     {
@@ -33,6 +36,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        instancePlayer = this;
         spriteRenderer = GetComponent<SpriteRenderer>();
         
     }
@@ -40,13 +44,18 @@ public class Player : MonoBehaviour
     void Start()
     {
         health = 3;   
-        BombEquipped.Type = "Default";
-        BombEquipped.Stock = 3;
+        BombEquipped.Type = "";
+        BombEquipped.Stock = 0;
+        gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>();
+        PlayerIsAlive = true;
     }
 
     public void OnDeath()
     {
         Destroy(gameObject);
+        gameHandler.gameOver();
+        PlayerIsAlive = false;
+        
     }
 
     // Update is called once per frame
@@ -92,13 +101,8 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine(Augment());
             }
-            else if(BombEquipped.Type == "Master Spark")
-            {
-                StartCoroutine(MasterSpark());
-            }
             BombEquipped.Stock -= 1;
         }
-
 
         if (i_timer >= 3.0f)
         {
@@ -113,8 +117,6 @@ public class Player : MonoBehaviour
 
             spriteRenderer.enabled = Mathf.FloorToInt(i_timer*3) % 2 != 0;
         }
-
-
     }
 
     void FixedUpdate()

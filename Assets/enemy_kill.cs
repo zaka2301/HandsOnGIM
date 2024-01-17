@@ -7,7 +7,7 @@ public class enemy_kill : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+    
     }
 
     // Update is called once per frame

@@ -39,8 +39,9 @@ public class enemy_bullet : MonoBehaviour
             {
                 Player.hit = true;
                 Player.health-=1;
+                Character.instanceCharacter.currentHealth -= 1;
                 Destroy(gameObject);
-           }
+            }
         }
     }
 }
