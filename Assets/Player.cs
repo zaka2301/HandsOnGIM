@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public static int health;
     float speed;
     public Bomb BombEquipped = new Bomb();
+    public GameHandler gameHandler;
 
     public class Bomb
     {
@@ -36,11 +37,13 @@ public class Player : MonoBehaviour
         health = 3;   
         BombEquipped.Type = "Default";
         BombEquipped.Stock = 3;
+        gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>();
     }
 
     public void OnDeath()
     {
         Destroy(gameObject);
+        gameHandler.gameOver();
     }
 
     // Update is called once per frame
