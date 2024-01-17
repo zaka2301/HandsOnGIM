@@ -36,6 +36,7 @@ public class enemy_bullet : MonoBehaviour
         {
            Player player = target.gameObject.GetComponent<Player>();
            Player.health-=1;
+           Character.instanceCharacter.currentHealth -= 1;
            Destroy(gameObject);
         }
     }

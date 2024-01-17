@@ -38,8 +38,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         health = 3;   
-        BombEquipped.Type = "Default";
-        BombEquipped.Stock = 3;
+        BombEquipped.Type = "";
+        BombEquipped.Stock = 0;
         gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>();
         PlayerIsAlive = true;
     }
@@ -94,10 +94,6 @@ public class Player : MonoBehaviour
             else if(BombEquipped.Type == "Shot Augment")
             {
                 StartCoroutine(Augment());
-            }
-            else if(BombEquipped.Type == "Master Spark")
-            {
-                StartCoroutine(MasterSpark());
             }
             BombEquipped.Stock -= 1;
         }

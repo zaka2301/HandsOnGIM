@@ -17,6 +17,13 @@ public class GameHandler : MonoBehaviour
         Time.timeScale = 0f;
         Debug.Log("You Died!");
     }
+
+    
+
+    // public void chooseBomb(){
+
+    //     Time.timeScale = 0f;
+    // }
     public void Restart(){
         SceneManager.LoadScene("GameScene");
         Time.timeScale = 1f;
