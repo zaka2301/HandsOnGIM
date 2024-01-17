@@ -26,12 +26,18 @@ public class Player : MonoBehaviour
     private float angleBetweenPoints = 7.2f;
     private float maxR = 5.0f;
 
+    public static bool hit = false;
+    private float i_timer = 0.0f;
+
+    private SpriteRenderer spriteRenderer;
+
 
 
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         instancePlayer = this;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         
     }
     // Start is called before the first frame update
@@ -98,7 +104,19 @@ public class Player : MonoBehaviour
             BombEquipped.Stock -= 1;
         }
 
+        if (i_timer >= 3.0f)
+        {
+            i_timer = 0.0f;
+            hit = false;
+            spriteRenderer.enabled = true;
+        }
 
+        if (hit == true)
+        {
+            i_timer += Time.deltaTime;
+
+            spriteRenderer.enabled = Mathf.FloorToInt(i_timer*3) % 2 != 0;
+        }
     }
 
     void FixedUpdate()
