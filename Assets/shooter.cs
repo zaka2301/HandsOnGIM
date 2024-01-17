@@ -5,15 +5,22 @@ using UnityEngine;
 public class shooter : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
-    [SerializeField] float ROF;
+    public float ROF;
+    private BulletModToggle toggle;
+    [HideInInspector]
+    public float def_rof;
     private float timer;
-    // Start is called before the first frame update
+    private large_shot large;
+    private Enemy_tracking tracking;
+    private charge_shot charge;
+
     void Start()
     {
+        def_rof = ROF;
         spawn();
-    }
 
-    // Update is called once per frame
+
+    }
     void Update()
     {
         if (timer < ROF)
@@ -25,10 +32,19 @@ public class shooter : MonoBehaviour
             spawn();
             timer = 0;
         }
-        
+
     }
     void spawn()
     {
+
         Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation);
+        large = bullet.GetComponent<large_shot>();
+        tracking = bullet.GetComponent<Enemy_tracking>();
+        charge = bullet.GetComponent<charge_shot>();
+
+        large.enabled = BulletModToggle.LargeToggle;
+        tracking.enabled = BulletModToggle.TrackingToggle;
+        charge.enabled = BulletModToggle.ChargeToggle;
+
     }
 }
