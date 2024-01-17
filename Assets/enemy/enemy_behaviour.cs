@@ -32,11 +32,13 @@ public class enemy_behaviour : MonoBehaviour
     public void OnDeath()
     {
         Destroy(gameObject);
+        ScoreManager.instance.killScore(5000);
     }
 
     public void Damage(int dmg)
     {
         health -= dmg;
+        ScoreManager.instance.DmgScore(1000);
         
     }
 

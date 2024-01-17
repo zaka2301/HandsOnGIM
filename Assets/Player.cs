@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player instancePlayer;
     [SerializeField] Rigidbody2D playerbody;
     [SerializeField] float move_speed;
     [SerializeField] float shift_modifier;
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     float speed;
     public Bomb BombEquipped = new Bomb();
     public GameHandler gameHandler;
+    public bool PlayerIsAlive = true;
 
     public class Bomb
     {
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        instancePlayer = this;
         
     }
     // Start is called before the first frame update
@@ -38,12 +41,15 @@ public class Player : MonoBehaviour
         BombEquipped.Type = "Default";
         BombEquipped.Stock = 3;
         gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>();
+        PlayerIsAlive = true;
     }
 
     public void OnDeath()
     {
         Destroy(gameObject);
         gameHandler.gameOver();
+        PlayerIsAlive = false;
+        
     }
 
     // Update is called once per frame
