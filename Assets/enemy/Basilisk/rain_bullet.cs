@@ -11,12 +11,17 @@ public class rain_bullet : MonoBehaviour
     public float rainTime;
     public float waitTime;
     public float endTime;
+    float randomX;
     
     // Start is called before the first frame update
     void Start()
     {
         startPosition = transform.position;
-        float randomX = Random.Range(-4.8f, 4.8f);
+        randomX = Random.Range(0f, 4.8f);
+        if (transform.position.x < 0)
+        {
+            randomX *= -1;
+        }
         rainPosition = new Vector3(randomX, transform.position.y, transform.position.z);
         endPosition = new Vector3(randomX, -8.7f, transform.position.z);
     }

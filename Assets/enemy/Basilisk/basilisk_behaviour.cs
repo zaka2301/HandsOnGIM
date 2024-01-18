@@ -7,7 +7,9 @@ public class basilisk_behaviour : enemy_behaviour
     [SerializeField] int max_health;
     [SerializeField] Transform head;
     [SerializeField] Transform body;
-    [SerializeField] float cannon_pos;
+    [SerializeField] float cannon_yoffset;
+    [SerializeField] float eye_yoffset;
+    [SerializeField] float eye_xoffset;
     [SerializeField] GameObject lunge_bullet;
     [SerializeField] float lunge_bullet_speed;
     [SerializeField] float lunge_shoot_interval;
@@ -37,8 +39,8 @@ public class basilisk_behaviour : enemy_behaviour
             {
                 for(int i = -1; i < 6; i++)
                 {
-                    Shoot(lunge_bullet, new Vector2(2.6f, body.position.y+cannon_pos+i*stack_interval), new Vector2(4.6f, body.position.y+cannon_pos+i*stack_interval+1), lunge_bullet_speed);
-                    Shoot(lunge_bullet, new Vector2(-2.6f, body.position.y+cannon_pos+i*stack_interval), new Vector2(-4.6f, body.position.y+cannon_pos+i*stack_interval+1), lunge_bullet_speed);
+                    Shoot(lunge_bullet, new Vector2(transform.position.x+2.6f, transform.position.y+cannon_yoffset+i*stack_interval), new Vector2(transform.position.x+4.6f, transform.position.y+cannon_yoffset+i*stack_interval+1), lunge_bullet_speed);
+                    Shoot(lunge_bullet, new Vector2(transform.position.x-2.6f, transform.position.y+cannon_yoffset+i*stack_interval), new Vector2(transform.position.x-4.6f, transform.position.y+cannon_yoffset+i*stack_interval+1), lunge_bullet_speed);
                 }
                 timer = 0f;
             }
@@ -51,10 +53,11 @@ public class basilisk_behaviour : enemy_behaviour
             }
             else
             {
-                Instantiate(oscilate_bullet, head.position, body.rotation);
-                GameObject oscilate = Instantiate(oscilate_bullet, head.position, body.rotation) as GameObject;
+                Instantiate(oscilate_bullet, new Vector2(transform.position.x+eye_xoffset, transform.position.y+eye_yoffset), transform.rotation);
+                GameObject oscilate = Instantiate(oscilate_bullet, new Vector2(transform.position.x-eye_xoffset, transform.position.y+eye_yoffset), transform.rotation) as GameObject;
                 oscilate.GetComponentInChildren<oscilate_bullet>().amplitude *= -1;
-                Instantiate(rain_bullet, body.position, body.rotation);
+                Instantiate(rain_bullet, new Vector2(transform.position.x+2.6f, transform.position.y+cannon_yoffset-stack_interval), body.rotation);
+                Instantiate(rain_bullet, new Vector2(transform.position.x-2.6f, transform.position.y+cannon_yoffset-stack_interval), body.rotation);
                 timer = 0f;
             }
         }

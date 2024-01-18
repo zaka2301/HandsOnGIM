@@ -19,7 +19,7 @@ public class oscilate_bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        direction = new Vector2(Mathf.Cos(time*bullet_speed)*amplitude, -vertical_speed);
+        direction = new Vector2(Mathf.Cos(0.5f+time*bullet_speed)*amplitude, -vertical_speed);
         transform.Translate(direction * Time.deltaTime * bullet_speed);
 
 
