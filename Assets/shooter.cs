@@ -6,7 +6,6 @@ public class shooter : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
     public float ROF;
-    private BulletModToggle toggle;
     [HideInInspector]
     public float def_rof;
     private float timer;
@@ -23,6 +22,11 @@ public class shooter : MonoBehaviour
     }
     void Update()
     {
+        if (BulletModToggle.ShooterTimerReset)
+        {
+            timer = 0;
+            BulletModToggle.ShooterTimerReset = false;
+        }
         if (timer < ROF)
         {
             timer = timer + Time.deltaTime;
@@ -45,6 +49,8 @@ public class shooter : MonoBehaviour
         large.enabled = BulletModToggle.LargeToggle;
         tracking.enabled = BulletModToggle.TrackingToggle;
         charge.enabled = BulletModToggle.ChargeToggle;
+
+        
 
     }
 }

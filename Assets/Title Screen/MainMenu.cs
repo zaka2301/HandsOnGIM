@@ -7,9 +7,14 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Start()
+    {
+        Time.timeScale = 0f;
+    }
     public void playGame(){
         Debug.Log("Loading game...");
         SceneManager.LoadScene("GameScene");
+        Time.timeScale = 1.0f;
     }
 
     public void QuitGame(){
