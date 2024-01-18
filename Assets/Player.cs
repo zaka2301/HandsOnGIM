@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     public Bomb BombEquipped = new Bomb();
     public GameHandler gameHandler;
     public bool PlayerIsAlive = true;
+    public AudioSource audioSource;
+    public AudioClip bombSound, stopSound;
 
     public class Bomb
     {
@@ -77,6 +79,8 @@ public class Player : MonoBehaviour
             if(BombEquipped.Type == "Default")
             {
                 StartCoroutine(Blast());
+                audioSource.clip = bombSound;
+                audioSource.Play();
                 Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, maxR);
 
                 foreach(var hitCollider in hitColliders)
@@ -95,6 +99,8 @@ public class Player : MonoBehaviour
             }
             else if (BombEquipped.Type == "Stopwatch")
             {
+                audioSource.clip = stopSound;
+                audioSource.Play();
                 StartCoroutine(Stopwatch());
             }
             else if(BombEquipped.Type == "Shot Augment")

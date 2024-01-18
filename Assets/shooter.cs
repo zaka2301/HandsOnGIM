@@ -6,31 +6,41 @@ public class shooter : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
     public float ROF;
-    private BulletModToggle toggle;
+    [SerializeField] AudioClip ShootSound;
     [HideInInspector]
     public float def_rof;
     private float timer;
     private large_shot large;
     private Enemy_tracking tracking;
     private charge_shot charge;
+    private AudioSource audioSource;
 
     void Start()
     {
         def_rof = ROF;
+        audioSource = GetComponent<AudioSource>();
         spawn();
 
 
     }
     void Update()
     {
+        if (BulletModToggle.ShooterTimerReset)
+        {
+            timer = 0;
+            BulletModToggle.ShooterTimerReset = false;
+        }
         if (timer < ROF)
         {
             timer = timer + Time.deltaTime;
         }
         else
         {
+            
             spawn();
             timer = 0;
+            audioSource.clip = ShootSound;
+            audioSource.Play();
         }
 
     }
@@ -38,6 +48,7 @@ public class shooter : MonoBehaviour
     {
 
         Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation);
+
         large = bullet.GetComponent<large_shot>();
         tracking = bullet.GetComponent<Enemy_tracking>();
         charge = bullet.GetComponent<charge_shot>();
@@ -45,6 +56,8 @@ public class shooter : MonoBehaviour
         large.enabled = BulletModToggle.LargeToggle;
         tracking.enabled = BulletModToggle.TrackingToggle;
         charge.enabled = BulletModToggle.ChargeToggle;
+
+        
 
     }
 }
