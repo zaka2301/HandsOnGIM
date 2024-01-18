@@ -27,6 +27,9 @@ public class Spawner : MonoBehaviour
     [SerializeField] GameObject Spider;
     [SerializeField] float spawninterval;
     [SerializeField] float gap = 0.2f; //distance between each units
+
+    [SerializeField] GameObject Basilisk;
+
     private float timer;
 
     private List<GameObject> SpawnableEnemies = new List<GameObject>();
@@ -59,6 +62,11 @@ public class Spawner : MonoBehaviour
         if (waves == 5)
         {
             SpawnSpider();
+        }
+        
+        if (waves == 10)
+        {
+            SpawnBasilisk();
         }
 
         {
@@ -131,6 +139,11 @@ public class Spawner : MonoBehaviour
     private void SpawnSpider()
     {
         SpawnUnit(Spider, 0, 20, 0, 10, 0, 0, 50, 1, 5.0f, 1.0f);
+    }
+
+    private void SpawnBasilisk()
+    {
+        SpawnUnit(Basilisk, 0, 5, 0, 5, 0, 0, 100, 1, 5.0f, 1.0f);
     }
 
     private int Random50()

@@ -17,18 +17,20 @@ public class basilisk_behaviour : enemy_behaviour
     [SerializeField] GameObject oscilate_bullet;
     [SerializeField] GameObject rain_bullet;
     [SerializeField] float oscilate_shoot_interval;
+    [SerializeField] float attack_interval;
     bool IsLunging;
     bool IsOscilate;
     float timer = 0f;
-
+    float timerA = 0f;
+    float randomA;
 
     void Start()
     {
-        SetHealth(max_health);
+        
     }
 
     void Update()
-    {
+    { 
         if (IsLunging == true) 
         {
             if (timer < lunge_shoot_interval)
@@ -59,6 +61,33 @@ public class basilisk_behaviour : enemy_behaviour
                 Instantiate(rain_bullet, new Vector2(transform.position.x+2.6f, transform.position.y+cannon_yoffset-stack_interval), body.rotation);
                 Instantiate(rain_bullet, new Vector2(transform.position.x-2.6f, transform.position.y+cannon_yoffset-stack_interval), body.rotation);
                 timer = 0f;
+            }
+        }
+        else
+        {
+            if (timerA < attack_interval)
+            {
+                timerA += Time.deltaTime;
+            }
+            else
+            {
+                if (GetHealth() <= max_health/2)
+                {
+                    randomA = Random.Range(1,3);
+                    if (randomA == 1)
+                    {
+                        GetComponent<Animator>().SetTrigger("Lunge");
+                    }
+                    else
+                    {
+                        GetComponent<Animator>().SetTrigger("Oscilate");
+                    }
+                }
+                else
+                {
+                    GetComponent<Animator>().SetTrigger("Lunge");
+                }
+                timerA = 0f;
             }
         }
     }
